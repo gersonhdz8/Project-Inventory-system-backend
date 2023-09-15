@@ -1,0 +1,22 @@
+{
+  "name": "project-inventory-system-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.0.0",
+    "express-routes-versioning": "^1.0.1",
+    "mongodb": "^6.1.0",
+    "zod": "^3.22.2"
+  }
+}
