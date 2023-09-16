@@ -1,1 +1,231 @@
 use("inventorySystem");
+
+//Create Colecction USERS
+db.createCollection("users", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            title: "users",
+            required: [
+                "_id",
+                "id",
+                "name",
+                "last_name",
+                "email",
+                "username",
+                "password",
+                "dni",
+                "role"
+            ],
+            properties: {
+                _id: { bsonType: "objectId" },
+                id: {
+                    bsonType: "int",                   
+                },
+                name: {
+                    bsonType: "string",                    
+                },
+                last_name: {
+                    bsonType: "string"                    
+                },
+                username: {
+                    bsonType: "string",                    
+                },
+                email: {
+                    bsonType: "string",                    
+                },
+                password: {
+                    bsonType: "string",
+                },
+                dni: {
+                    bsonType: "string",                    
+                },                
+                role: {
+                    enum: ["user", "admin","superadmin"],
+                }    
+                
+            },
+            additionalProperties: false,
+        },
+    },
+});
+db.clientes.createIndex({ id: 1 }, { unique: true });
+db.clientes.createIndex({ dni: 1 }, { unique: true });
+db.clientes.createIndex({ email: 1 }, { unique: true });
+db.clientes.createIndex({ username: 1 }, { unique: true });
+
+//Create colletion PRODUCTS
+db.createCollection("products", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            title: "users",
+            required: [
+                "_id",
+                "id",
+                "name",
+                "description",
+                "image_url",                
+                "category"                
+            ],
+            properties: {
+                _id: { bsonType: "objectId" },
+                id: {
+                    bsonType: "int",                   
+                },
+                name: {
+                    bsonType: "string",                    
+                },
+                description: {
+                    bsonType: "string"                    
+                },
+                image_url: {
+                    bsonType: "string",                    
+                },
+                category: {
+                    bsonType: "array",
+                    items: {
+                        bsonType: "string"
+                    },                    
+                }
+            },
+            additionalProperties: false,
+        },
+    },
+});
+db.products.createIndex({ id: 1 }, { unique: true });
+
+//Create collection INVENTORY
+db.createCollection("inventory", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            title: "inventory",
+            required: [
+                "_id",
+                "productId",
+                "quantity",
+                "quantityMin",
+                "quantityMax"
+            ],
+            properties: {
+                _id: {
+                    bsonType: "objectId",
+                    description: "ID único del documento"
+                },
+                productId: {
+                    bsonType: "int",
+                    description: "ID del producto"
+                },
+                quantity: {
+                    bsonType: "int",
+                    minimum: 0,
+                    description: "Cantidad disponible del producto"
+                },
+                quantityMin: {
+                    bsonType: "int",
+                    minimum: 0,
+                    description: "Cantidad mínima del producto"
+                },
+                quantityMax: {
+                    bsonType: "int",
+                    minimum: 0,
+                    description: "Cantidad máxima del producto"
+                }
+            },
+            additionalProperties: false,
+        },
+    },
+});
+
+db.inventory.createIndex({ productId: 1 }, { unique: true });
+
+db.createCollection("reservations", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            title: "reservations",
+            required: [
+                "_id",
+                "id",
+                "productId",
+                "customerName",
+                "date",
+                "status"
+            ],
+            properties: {
+                _id: {
+                    bsonType: "objectId",
+                    description: "ID único del documento"
+                },
+                id: {
+                    bsonType: "int",
+                    description: "ID único del documento"
+                },
+                productId: {
+                    bsonType: "int",
+                    description: "ID del producto"
+                },
+                customerName: {
+                    bsonType: "string",
+                    description: "Nombre del cliente"
+                },
+                date: {
+                    bsonType: "date",
+                    description: "Fecha de la reserva"
+                },
+                status: {
+                    bsonType: "string",
+                    enum: ["Pendiente", "Aprobada", "Rechazada", "Cancelada"],
+                    description: "Estado de la reserva"
+                }
+            },
+            additionalProperties: false,
+        },
+    },
+});
+
+db.reservations.createIndex({ productId: 1}, { unique: true });
+
+//Create collection LOANS
+db.createCollection("loans", {
+    validator: {
+        $jsonSchema: {
+            bsonType: "object",
+            title: "loans",
+            required: [
+                "_id",
+                "id",
+                "productId",
+                "customerName",
+                "date",
+                "returnDate"
+            ],
+            properties: {
+                _id: {
+                    bsonType: "objectId",
+                    description: "ID único del documento"
+                },
+                productId: {
+                    bsonType: "int",
+                    description: "ID del producto"
+                },
+                customerName: {
+                    bsonType: "string",
+                    description: "Nombre del cliente"
+                },
+                date: {
+                    bsonType: "date",
+                    description: "Fecha del préstamo"
+                },
+                returnDate: {
+                    bsonType: "date",
+                    description: "Fecha de devolución"
+                }
+            },
+            additionalProperties: false,
+        },
+    },
+});
+
+db.loans.createIndex({ productId: 1, customerName: 1 }, { unique: true });
