@@ -1,4 +1,4 @@
-export default class ClientModel{
+export default class Model{
     static async getClients(){
         try {
             

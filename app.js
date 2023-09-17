@@ -1,13 +1,26 @@
 import  express  from "express";
 import dotenv from "dotenv";
-import ClientRoutes from "./routes/client.js"
+import AuthRouter from "./routes/auth.js"
+import ClientRouter from "./routes/client.js"
+import AdminRouter from "./routes/admin.js"
+import SuperadminRouter from "./routes/superadmin.js"
+import ProductRouter from "./routes/product.js"
+import InventoryRouter from "./routes/inventory.js"
+import LoanRouter from "./routes/loan.js"
 
 dotenv.config()
 
 const app = express();
 app.use(express.json());
 
-app.use("/users", ClientRoutes)
+app.use("/auth", AuthRouter)
+app.use("/clients", ClientRouter)
+app.use("/admin", AdminRouter)
+app.use("/superadmin", SuperadminRouter)
+app.use("/products", ProductRouter)
+app.use("/inventory", InventoryRouter)
+app.use("/reservation", ReservationRouter)
+app.use("/loan", LoanRouter)
 
 const config = JSON.parse(process.env.MY_SERVER)
 
