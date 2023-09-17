@@ -6,6 +6,7 @@ import AdminRouter from "./routes/admin.js"
 import SuperadminRouter from "./routes/superadmin.js"
 import ProductRouter from "./routes/product.js"
 import InventoryRouter from "./routes/inventory.js"
+import ReserveRouter from "./routes/reserve.js"
 import LoanRouter from "./routes/loan.js"
 
 dotenv.config()
@@ -19,7 +20,7 @@ app.use("/admin", AdminRouter)
 app.use("/superadmin", SuperadminRouter)
 app.use("/products", ProductRouter)
 app.use("/inventory", InventoryRouter)
-app.use("/reservation", ReservationRouter)
+app.use("/reservation", ReserveRouter)
 app.use("/loan", LoanRouter)
 
 const config = JSON.parse(process.env.MY_SERVER)
