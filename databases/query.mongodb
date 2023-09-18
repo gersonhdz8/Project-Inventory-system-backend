@@ -1,0 +1,2 @@
+use("inventorySystem")
+db.getCollection("users").find({role: "client"})

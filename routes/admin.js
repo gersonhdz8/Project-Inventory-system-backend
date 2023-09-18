@@ -8,5 +8,7 @@ router.get("/getAllAdmin",AdminController.getAllAdmin)
 router.put("/update/:id", AdminController.updateAdmin)
 router.delete("/delete/:id", AdminController.deleteAdmin)
 
+router.get("/getAllClients",AdminController.getAllClients)
+
 export default router
 

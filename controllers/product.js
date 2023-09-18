@@ -1,6 +1,6 @@
 import Model from "../models/modelMongoDB.js"
 
-export default class Model {
+export default class ProductController {
 
     static async getProduct(req,res,next){
         try {

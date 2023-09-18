@@ -37,4 +37,13 @@ export default class AdminController{
             next(error); 
         }
     }
+    static async getAllClients(req,res,next){
+
+        try {
+            const admin = await Model.getAllClients()            
+            res.status(200).json(admin);
+        } catch (error) {
+            next(error); 
+        }
+    }
 }

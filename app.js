@@ -1,6 +1,6 @@
 import  express  from "express";
 import dotenv from "dotenv";
-import AuthRouter from "./routes/auth.js"
+//import AuthRouter from "./routes/auth.js"
 import ClientRouter from "./routes/client.js"
 import AdminRouter from "./routes/admin.js"
 import SuperadminRouter from "./routes/superadmin.js"
@@ -14,7 +14,7 @@ dotenv.config()
 const app = express();
 app.use(express.json());
 
-app.use("/auth", AuthRouter)
+//app.use("/auth", AuthRouter)
 app.use("/clients", ClientRouter)
 app.use("/admin", AdminRouter)
 app.use("/superadmin", SuperadminRouter)
