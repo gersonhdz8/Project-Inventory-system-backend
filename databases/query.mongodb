@@ -1,2 +1,27 @@
+//Buscar todos los usuarios que sean Clientes
 use("inventorySystem")
 db.getCollection("users").find({role: "client"})
+
+//Buscar todos los usuarios que sean Admin
+use("inventorySystem")
+db.getCollection("users").find({role: "admin"})
+
+//Buscar todos los usuarios que sean Superadmin
+use("inventorySystem")
+db.getCollection("users").find({role: "superadmin"})
+
+//Buscar usuario por correo
+use("inventorySystem")
+db.getCollection("users").find({email: "carlos@example.com"})
+
+//Buscar todos los productos
+use("inventorySystem")
+db.getCollection("products").find()
+
+//Buscar prodcuto por nombre
+use("inventorySystem")
+db.getCollection("products").find({name: "Los Enigmas de la Antigüedad"})
+
+//Buscar prodcuto por categoria
+use("inventorySystem")
+db.getCollection("products").find({category: "Misterio"})

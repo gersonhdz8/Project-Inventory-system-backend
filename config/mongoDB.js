@@ -5,11 +5,11 @@ dotenv.config();
 export default async function connect() {
     try {
         const uri = `${process.env.ATLAS_STRING}`;
-        const options = {
+        /* const options = {
             useNewUrlParser: true,
             useUnifiedTopology: true,
-        };
-        const client = await new MongoClient(uri, options).connect();
+        }; */
+        const client = await new MongoClient(uri).connect();
         return client;
     } catch (error) {
         return {status: 500, message: error};
