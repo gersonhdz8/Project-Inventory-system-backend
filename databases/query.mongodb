@@ -1,4 +1,5 @@
-//Buscar todos los usuarios que sean Clientes
+//-----------------------BUSCAR USUARIO POR ROLE -------------------------------------
+//Buscar todos los usuarios que sean Clientes /:role
 use("inventorySystem")
 db.getCollection("users").find({role: "client"})
 
@@ -9,19 +10,151 @@ db.getCollection("users").find({role: "admin"})
 //Buscar todos los usuarios que sean Superadmin
 use("inventorySystem")
 db.getCollection("users").find({role: "superadmin"})
-
-//Buscar usuario por correo
+//------------------------------------------------------------------------------------
+//Buscar usuario por correo /:email
 use("inventorySystem")
 db.getCollection("users").find({email: "carlos@example.com"})
+
+//Buscar todos los usuarios
+use("inventorySystem")
+db.getCollection("users").find()
 
 //Buscar todos los productos
 use("inventorySystem")
 db.getCollection("products").find()
 
-//Buscar prodcuto por nombre
+//Buscar prodcuto por nombre /:name
 use("inventorySystem")
 db.getCollection("products").find({name: "Los Enigmas de la Antigüedad"})
 
-//Buscar prodcuto por categoria
+//Buscar prodcuto por categoria /:category
 use("inventorySystem")
 db.getCollection("products").find({category: "Misterio"})
+
+//Buscar el inventario del producto por id /:productId
+use("inventorySystem")
+db.getCollection("inventory").find({productId: 2}) 
+
+//Buscar el inventario del producto por name /:name
+use("inventorySystem")
+db.getCollection("inventory").find({name: 2})
+
+//Buscar el producto y el inventario del producto por id /:productId
+use("inventorySystem")
+db.getCollection("products").aggregate([
+    {
+        $match:{
+            id: 2
+        }
+    },
+    {
+        $lookup: {
+            from: "inventory",
+            localField: "id" ,
+            foreignField: "productId" ,
+            as: "inventory"
+        }
+    }
+]) 
+
+//Buscar el producto y el inventario del producto por name /:name
+use("inventorySystem")
+db.getCollection("products").aggregate([
+    {
+        $match:{
+            name: "Los Enigmas de la Antigüedad"
+        }
+    },
+    {
+        $lookup: {
+            from: "inventory",
+            localField: "id" ,
+            foreignField: "productId" ,
+            as: "inventory"
+        }
+    }
+]) 
+
+//Buscar todas las reservas realizadas
+use("inventorySystem")
+db.getCollection("reservations").find()
+
+//Buscar todas los productos disponibles para reserva
+use("inventorySystem")
+db.getCollection("inventory").find({quantity:{ $gte: 1}})
+
+//Buscar reservas por dni de cliente /:dni
+use("inventorySystem")
+db.getCollection("loans").find({dni:"1234435"})
+
+//----CREATE ROUTES-----------------------------------------------------------
+
+//Crear usuario
+use("inventorySystem")
+db.getCollection("users").insertOne({
+    id: 6,
+    name: "Kayn",
+    last_name: "Martinez",
+    email: "kayn@example.com",
+    username: "kayne",
+    password: "peterpass",
+    dni: "789122345EG",
+    role: "client"
+})
+
+//Crear producto
+use("inventorySystem")
+db.getCollection("products").insertOne({
+
+    id: 1,
+    name: "Secretos de la Naturaleza",
+    description: "Sumérgete en un mundo de maravillas naturales y secretos por descubrir con 'Secretos de la Naturaleza'. Este libro te llevará a explorar los misterios de la madre naturaleza y su belleza indomable.",
+    image_url: "https://static.rfstat.com/gm-media/template/234/screen/10000/style/10046/3d9cce8128a8_1x.jpeg",
+    category: ["Naturaleza", "Descubrimientos"],
+    
+})
+
+//Crear reserva
+use("inventorySystem")
+db.getCollection("products").insertOne({
+
+    id: 1,
+    productId: 1,
+    dni: "123456789A",
+    customerName: "Juan Pérez",
+    date: new Date("2023-09-25T10:00:00Z"),
+    status: "Pendiente"
+    
+})
+
+//Crear Inventario
+use("inventorySystem")
+db.getCollection("products").insertOne({
+
+    
+    id: 29,
+    productId: 29,
+    quantity: 50,
+    price: 2399,
+    location: "Estante B-10"
+    
+    
+})
+
+//Crear prestamo
+use("inventorySystem")
+db.getCollection("products").insertOne({
+
+    
+    id: 1,
+    productId: 1,
+    dni: "987654321B",
+    customerName: "Juan Pérez",
+    date: new Date("2023-09-25T10:00:00Z"),
+    returnDate: new Date("2023-10-02T10:00:00Z"),
+    quantity: 2
+    
+    
+})
+
+//Actualizar usuario

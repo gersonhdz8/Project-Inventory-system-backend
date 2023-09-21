@@ -153,9 +153,9 @@ db.createCollection("reservations", {
                 "_id",
                 "id",
                 "productId",
+                "dni",
                 "customerName",
-                "date",
-                "status"
+                "date"                
             ],
             properties: {
                 _id: {
@@ -169,6 +169,10 @@ db.createCollection("reservations", {
                 productId: {
                     bsonType: "int",
                     description: "ID del producto"
+                },
+                dni: {
+                    bsonType: "string", 
+                    description: "Número de identificación del usuario "                   
                 },
                 customerName: {
                     bsonType: "string",
@@ -201,6 +205,7 @@ db.createCollection("loans", {
                 "_id",
                 "id",
                 "productId",
+                "dni",
                 "customerName",
                 "date",
                 "returnDate",
@@ -218,6 +223,10 @@ db.createCollection("loans", {
                 productId: {
                     bsonType: "int",
                     description: "ID del producto"
+                },
+                dni: {
+                    bsonType: "string", 
+                    description: "Número de identificación del usuario "                   
                 },
                 customerName: {
                     bsonType: "string",
@@ -718,70 +727,80 @@ db.inventory.insertMany([
 db.reservations.insertMany([
     {
         id: 1,
-        productId: 101,
+        productId: 1,
+        dni: "123456789A",
         customerName: "Juan Pérez",
         date: new Date("2023-09-25T10:00:00Z"),
         status: "Pendiente"
     },
     {
         id: 2,
-        productId: 102,
+        productId: 2,
+        dni: "456789123C",
         customerName: "Ana García",
         date: new Date("2023-09-26T14:30:00Z"),
         status: "Aprobada"
     },
     {
         id: 3,
-        productId: 103,
+        productId: 3,
+        dni: "123456789A",
         customerName: "Luis Rodríguez",
         date: new Date("2023-09-27T11:15:00Z"),
         status: "Rechazada"
     },
     {
         id: 4,
-        productId: 104,
+        productId: 4,
+        dni: "456789123C",
         customerName: "María López",
         date: new Date("2023-09-28T16:45:00Z"),
         status: "Pendiente"
     },
     {
         id: 5,
-        productId: 105,
+        productId: 5,
+        dni: "123456789A",
         customerName: "Carlos Martínez",
         date: new Date("2023-09-29T09:30:00Z"),
         status: "Aprobada"
     },
     {
         id: 6,
-        productId: 106,
+        productId: 6,
+        dni: "456789123C",
         customerName: "Sofía Fernández",
         date: new Date("2023-09-30T15:00:00Z"),
         status: "Pendiente"
     },
     {
         id: 7,
-        productId: 107,
+        productId: 7,
+        dni: "987654321B",
         customerName: "Eduardo González",
         date: new Date("2023-10-01T13:45:00Z"),
         status: "Aprobada"
     },
     {
         id: 8,
-        productId: 108,
+        productId: 8,
+        dni: "987654321B",
         customerName: "Laura Silva",
         date: new Date("2023-10-02T17:30:00Z"),
         status: "Pendiente"
     },
     {
         id: 9,
-        productId: 109,
+        productId: 9,
+        dni: "456789123C",
         customerName: "Javier Pérez",
         date: new Date("2023-10-03T12:00:00Z"),
         status: "Rechazada"
     },
     {
         id: 10,
-        productId: 110,
+        productId: 10,
+        dni: "987654321B",
         customerName: "Patricia Sánchez",
         date: new Date("2023-10-04T14:00:00Z"),
         status: "Aprobada"
@@ -794,7 +813,8 @@ db.loans.insertMany([
     {
         
         id: 1,
-        productId: 101,
+        productId: 1,
+        dni: "987654321B",
         customerName: "Juan Pérez",
         date: new Date("2023-09-25T10:00:00Z"),
         returnDate: new Date("2023-10-02T10:00:00Z"),
@@ -803,7 +823,8 @@ db.loans.insertMany([
     {
         
         id: 2,
-        productId: 102,
+        productId: 2,
+        dni: "123456789A",
         customerName: "Ana García",
         date: new Date("2023-09-26T14:30:00Z"),
         returnDate: new Date("2023-10-03T14:30:00Z"),
@@ -812,7 +833,8 @@ db.loans.insertMany([
     {
         
         id: 3,
-        productId: 103,
+        productId: 3,
+        dni: "987654321B",
         customerName: "Luis Rodríguez",
         date: new Date("2023-09-27T11:15:00Z"),
         returnDate: new Date("2023-10-04T11:15:00Z"),
@@ -821,7 +843,8 @@ db.loans.insertMany([
     {
         
         id: 4,
-        productId: 104,
+        productId: 4,
+        dni: "456789123C",
         customerName: "María López",
         date: new Date("2023-09-28T16:45:00Z"),
         returnDate: new Date("2023-10-05T16:45:00Z"),
@@ -830,7 +853,8 @@ db.loans.insertMany([
     {
         
         id: 5,
-        productId: 105,
+        productId: 5,
+        dni: "123456789A",
         customerName: "Carlos Martínez",
         date: new Date("2023-09-29T09:30:00Z"),
         returnDate: new Date("2023-10-06T09:30:00Z"),
