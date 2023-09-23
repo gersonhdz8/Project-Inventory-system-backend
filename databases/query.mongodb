@@ -132,7 +132,7 @@ use("inventorySystem")
 db.getCollection("products").insertOne({
 
     
-    id: 29,
+    id: 30,
     productId: 29,
     quantity: 50,
     price: 2399,
@@ -156,5 +156,7 @@ db.getCollection("products").insertOne({
     
     
 })
+
+//---UPDATE ROUTES-------------------------------------------------
 
 //Actualizar usuario
