@@ -141,7 +141,7 @@ db.createCollection("inventory", {
         },
     },
 });
-db.inventory.createIndex({ id: 1 }, { unique: true });
+db.inventory.createIndex({ id: 1 , productId: 1 }, { unique: true });
 
 //Create collection RESERVATIONS
 db.createCollection("reservations", {

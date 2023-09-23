@@ -11,13 +11,15 @@ const reservationsCollection = conexion.collection("reservations")
 const loansCollection = conexion.collection("loans")
 
 export default class Model{
-    static async getAllClients(){
+
+    //Buscar todos los usuarios
+    static async getAllUsers(){
         try {
 
-            const client = await usersCollection.find({role:"client"}).toArray()
+            const client = await usersCollection.find().toArray()
             if(!client)
             {
-                return {status:400, message:"No se encontró ningún cliente"}
+                return {status:400, message:"No se encontró ningún usuario"}
             }
             else{
                 return client
@@ -27,4 +29,213 @@ export default class Model{
             return Promise.reject(error)
         }
     }
+    //Buscar todos los usuarios que sean clientes
+    static async getAllUserClients(){
+        try {
+
+            const client = await usersCollection.find({role:"client"}).toArray()
+            if(!client)
+            {
+                return {status:400, message:"No se encontró ningún usuario"}
+            }
+            else{
+                return client
+            }
+            
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+    //Buscar todos los usuarios que sean admin
+    static async getAllUserAdmin(){
+        try {
+
+            const client = await usersCollection.find({role:"admin"}).toArray()
+            if(!client)
+            {
+                return {status:400, message:"No se encontró ningún usuario"}
+            }
+            else{
+                return client
+            }
+            
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+    //Buscar usuarios por correo
+    static async getUserByEmail(correo){
+        try {
+
+            const client = await usersCollection.find({email:correo}).toArray()
+            if(!client)
+            {
+                return {status:400, message:"No se encontró ningún usuario"}
+            }
+            else{
+                return client
+            }
+            
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+    //Buscar usuarios por dni
+    static async getUserByDni(dni){
+        try {
+
+            const client = await usersCollection.find({dni:dni}).toArray()
+            if(!client)
+            {
+                return {status:400, message:"No se encontró ningún usuario"}
+            }
+            else{
+                return client
+            }
+            
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+    //Buscar todos los productos
+    static async getAllProducts(){
+        try {
+
+            const product = await productsCollection.find().toArray()
+            if(!product)
+            {
+                return {status:400, message:"No se encontró ningún producto"}
+            }
+            else{
+                return product
+            }
+            
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+    //Buscar producto por nombre
+    static async getProductByName(name){
+        try {
+
+            const product = await productsCollection.find({name:name}).toArray()
+            if(!product)
+            {
+                return {status:400, message:"No se encontró ningún producto"}
+            }
+            else{
+                return product
+            }
+            
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+    //Buscar producto por categoria
+    static async getProductByCategory(category){
+        try {
+
+            const product = await productsCollection.find({category:category}).toArray()
+            if(!product)
+            {
+                return {status:400, message:"No se encontró ningún producto"}
+            }
+            else{
+                return product
+            }
+            
+        } catch (error) {
+            
+            return Promise.reject(error)
+        }
+    }
+    //Buscar inventario del producto por ProductId
+    static async getProductInventoryById(productId){
+        try {
+
+            const product = await inventoryCollection.find({productId:productId}).toArray()
+            if(!product)
+            {
+                return {status:400, message:"No se encontró ningún inventario."}
+            }
+            else{
+                return product
+            }
+            
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+    //Buscar inventario del producto por nombre de producto
+    static async getProductInventoryByName(name){
+        try {
+
+            const product = await productsCollection.aggregate([{$match:{name:name}},{$lookup:{from: "inventory",
+            localField: "id" ,
+            foreignField: "productId" ,
+            as: "inventory"}}]).toArray()
+            if(!product)
+            {
+                return {status:400, message:"No se encontró ningún inventario"}
+            }
+            else{
+                return product
+            }
+            
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+    //Buscar todas las reservas
+    static async getAllReserves(){
+        try {
+
+            const reserve = await reservationsCollection.find().toArray()
+            if(!reserve)
+            {
+                return {status:400, message:"No se encontró ningúna reserva"}
+            }
+            else{
+                return reserve
+            }
+            
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+    //Buscar productos disponibles para reserva
+    static async getProductsAvailableReserve(){
+        try {
+
+            const product = await inventoryCollection.find({quantity:{ $gte: 1}}).toArray()
+            if(!product)
+            {
+                return {status:400, message:"No se encontró ningúna reserva"}
+            }
+            else{
+                return product
+            }
+            
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+    //Buscar reserva por dni de usuario 
+    static async getReserveByDni(dni){
+        try {
+
+            const product = await reservationsCollection.find({dni:dni}).toArray()
+            if(!product)
+            {
+                return {status:400, message:"No se encontró ningúna reserva"}
+            }
+            else{
+                return product
+            }
+            
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+    
 }
