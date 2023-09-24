@@ -1,5 +1,6 @@
 import connect from "../config/mongoDB.js";
 import dotenv from "dotenv"
+import insertWithTransaction from "../helpers/transaction.js";
 
 dotenv.config("../")
 
@@ -233,6 +234,38 @@ export default class Model{
                 return product
             }
             
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+    //Crear una reserva
+    static async createReserve(reserve){
+        try {
+
+            return await insertWithTransaction(reserve, "reservations")
+
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+    //Obtener detalles de las reservas del usuario
+    static async getReserveDetails(dni){
+        try {
+
+            const reserve= await reservationsCollection.find({dni:dni}).toArray()
+            return reserve
+
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+    //Cancelar una reserva
+    static async canceledReserve(reserveId){
+        try {
+
+            const reserve= await reservationsCollection.updateOne({id:reserveId},{$set:{status: "Cancelada"}})
+            return reserve
+
         } catch (error) {
             return Promise.reject(error)
         }
