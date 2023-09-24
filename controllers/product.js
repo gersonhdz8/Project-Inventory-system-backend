@@ -4,16 +4,24 @@ export default class ProductController {
 
     static async getProduct(req,res,next){
         try {
-            const product = await Model.getProduct(parseInt(req.params.id))            
+            const product = await Model.getProduct(parseInt(req.params.name))            
             res.status(200).json(product);
         } catch (error) {
             next(error); 
         }
     }
 
-    static async getAllProduct(req,res,next){
+    static async getAllProducts(req,res,next){
         try {
-            const product = await Model.getAllProduct()            
+            const product = await Model.getAllProducts()            
+            res.status(200).json(product);
+        } catch (error) {
+            next(error); 
+        }
+    }
+    static async getProductByCategory(req,res,next){
+        try {
+            const product = await Model.getProductByCategory(req.params.category)            
             res.status(200).json(product);
         } catch (error) {
             next(error); 

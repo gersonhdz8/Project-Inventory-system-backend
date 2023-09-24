@@ -152,7 +152,7 @@ db.createCollection("reservations", {
             required: [
                 "_id",
                 "id",
-                "productId",
+                "products",
                 "dni",
                 "customerName",
                 "date"                
@@ -166,9 +166,12 @@ db.createCollection("reservations", {
                     bsonType: "int",
                     description: "ID único del documento"
                 },
-                productId: {
-                    bsonType: "int",
-                    description: "ID del producto"
+                products: {
+                    bsonType: "array",
+                    description: "Productos para reservar",
+                    items: {
+                        bsonType: "int"
+                    },
                 },
                 dni: {
                     bsonType: "string", 
@@ -179,8 +182,8 @@ db.createCollection("reservations", {
                     description: "Nombre del cliente"
                 },
                 date: {
-                    bsonType: "date",
-                    description: "Fecha de la reserva"
+                    bsonType: "string",
+                    description: "Fecha de la reserva con formato DD/MM/YYYY 00:00 AM"
                 },
                 status: {
                     bsonType: "string",
@@ -251,6 +254,17 @@ db.createCollection("loans", {
     },
 });
 db.loans.createIndex({ id: 1 }, { unique: true });
+
+//Autoincrement
+use("inventorySystem")
+db.createCollection("counters");
+db.counters.insertMany([
+    { _id: "usersID", sequence_value: 6 },
+    { _id: "productsID", sequence_value: 30 },
+    { _id: "inventoryID", sequence_value: 30 },
+    { _id: "reservationsID", sequence_value: 11 },
+    { _id: "loansID", sequence_value: 6 },
+]);
 
 
 //DATA USERS
@@ -727,82 +741,82 @@ db.inventory.insertMany([
 db.reservations.insertMany([
     {
         id: 1,
-        productId: 1,
+        products: [1,3],
         dni: "123456789A",
         customerName: "Juan Pérez",
-        date: new Date("2023-09-25T10:00:00Z"),
+        date: "2023/09/25/10:00 AM",
         status: "Pendiente"
     },
     {
         id: 2,
-        productId: 2,
+        products: [2,1],
         dni: "456789123C",
         customerName: "Ana García",
-        date: new Date("2023-09-26T14:30:00Z"),
+        date: "2023-09-26T14:30:00Z",
         status: "Aprobada"
     },
     {
         id: 3,
-        productId: 3,
+        products: [3,5],
         dni: "123456789A",
         customerName: "Luis Rodríguez",
-        date: new Date("2023-09-27T11:15:00Z"),
+        date: "2023-09-27T11:15:00Z",
         status: "Rechazada"
     },
     {
         id: 4,
-        productId: 4,
+        products: [3,5],
         dni: "456789123C",
         customerName: "María López",
-        date: new Date("2023-09-28T16:45:00Z"),
+        date: "2023-09-28T16:45:00Z",
         status: "Pendiente"
     },
     {
         id: 5,
-        productId: 5,
+        products: [3,5],
         dni: "123456789A",
         customerName: "Carlos Martínez",
-        date: new Date("2023-09-29T09:30:00Z"),
+        date: "2023-09-29T09:30:00Z",
         status: "Aprobada"
     },
     {
         id: 6,
-        productId: 6,
+        products: [3,5],
         dni: "456789123C",
         customerName: "Sofía Fernández",
-        date: new Date("2023-09-30T15:00:00Z"),
+        date: "2023-09-30T15:00:00Z",
         status: "Pendiente"
     },
     {
         id: 7,
-        productId: 7,
+        products: [3,5],
         dni: "987654321B",
         customerName: "Eduardo González",
-        date: new Date("2023-10-01T13:45:00Z"),
+        date: "2023-10-01T13:45:00Z",
         status: "Aprobada"
     },
     {
         id: 8,
-        productId: 8,
+        products: [3,5],
         dni: "987654321B",
         customerName: "Laura Silva",
-        date: new Date("2023-10-02T17:30:00Z"),
+        date: "2023-10-02T17:30:00Z",
         status: "Pendiente"
     },
     {
         id: 9,
-        productId: 9,
+        products: [3,5],
         dni: "456789123C",
         customerName: "Javier Pérez",
-        date: new Date("2023-10-03T12:00:00Z"),
+        date: "2023-10-03T12:00:00Z",
         status: "Rechazada"
     },
     {
         id: 10,
-        productId: 10,
+        products: [3,5],
         dni: "987654321B",
         customerName: "Patricia Sánchez",
-        date: new Date("2023-10-04T14:00:00Z"),
+        date: "2023-10-04T14:00:00Z",
         status: "Aprobada"
     }
 ]);

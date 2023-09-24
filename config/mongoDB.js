@@ -4,7 +4,7 @@ dotenv.config();
 
 export default async function connect() {
     try {
-        const uri = `${process.env.ATLAS_STRING}`;
+        const uri = `${process.env.ATLAS_STRING}inventorySystem`;
         /* const options = {
             useNewUrlParser: true,
             useUnifiedTopology: true,

@@ -1,3 +1,28 @@
-### Obtiene todos los r
-GET http://127.0.0.10:3010/admin/getAllClients
+###-------------------- CLIENTES---------------------
+
+###Todos los productos
+GET http://127.0.0.10:3010/aplication/client/getAllProducts
+Content-Type: application/json
+
+###Producto por categoria
+GET http://127.0.0.10:3010/aplication/client/getProductCategory/Misterio
+Content-Type: application/json
+
+###Crear reserva
+POST  http://127.0.0.10:3010/aplication/client/newReserve
+Content-Type: application/json
+
+{
+    "products": [1,3],
+    "dni": "123456789Ah",
+    "customerName": "Juan Pérezm",
+    "date": "2023-09-25T10:00:00Z" 
+}
+
+###Detalles de reserva por usuario
+GET  http://127.0.0.10:3010/aplication/client/reserveDetails/123456789A
+Content-Type: application/json
+
+###Cancelar una reserva
+PATCH   http://127.0.0.10:3010/aplication/client/canceledReserve/4
 Content-Type: application/json

@@ -79,13 +79,19 @@ db.getCollection("products").aggregate([
 use("inventorySystem")
 db.getCollection("reservations").find()
 
+use("inventorySystem")
+db.getCollection("reservations").find({dni:"123456789A"})
+
+use("inventorySystem")
+db.getCollection("reservations").updateOne({id:4},{$set:{status: "Cancelada"}})
+
 //Buscar todas los productos disponibles para reserva
 use("inventorySystem")
 db.getCollection("inventory").find({quantity:{ $gte: 1}})
 
 //Buscar reservas por dni de cliente /:dni
 use("inventorySystem")
-db.getCollection("loans").find({dni:"1234435"})
+db.getCollection("reservations").find({dni:"1234435"})
 
 //----CREATE ROUTES-----------------------------------------------------------
 
@@ -116,7 +122,7 @@ db.getCollection("products").insertOne({
 
 //Crear reserva
 use("inventorySystem")
-db.getCollection("products").insertOne({
+db.getCollection("reservations").insertOne({
 
     id: 1,
     productId: 1,
@@ -129,7 +135,7 @@ db.getCollection("products").insertOne({
 
 //Crear Inventario
 use("inventorySystem")
-db.getCollection("products").insertOne({
+db.getCollection("inventory").insertOne({
 
     
     id: 30,
@@ -143,7 +149,7 @@ db.getCollection("products").insertOne({
 
 //Crear prestamo
 use("inventorySystem")
-db.getCollection("products").insertOne({
+db.getCollection("loans").insertOne({
 
     
     id: 1,
@@ -156,6 +162,8 @@ db.getCollection("products").insertOne({
     
     
 })
+
+use
 
 //---UPDATE ROUTES-------------------------------------------------
 

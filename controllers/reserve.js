@@ -10,6 +10,22 @@ export default class ReserveController{
             next(error); 
         }
     }
+    static async getReserveDetails(req,res,next){
+        try {
+            const reserve = await Model.getReserveDetails(req.params.dni)            
+            res.status(200).json(reserve);
+        } catch (error) {
+            next(error); 
+        }
+    }
+    static async canceledReserve(req,res,next){
+        try {
+            const reserve = await Model.canceledReserve(parseInt(req.params.reserveId))            
+            res.status(200).json(reserve);
+        } catch (error) {
+            next(error); 
+        }
+    }
 
     static async getAllReserve(req,res,next){
         try {
