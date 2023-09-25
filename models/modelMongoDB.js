@@ -7,7 +7,6 @@ dotenv.config("../")
 const conexion = (await connect()).db(process.env.ATLAS_DB)
 const usersCollection = conexion.collection("users")
 const productsCollection = conexion.collection("products")
-const inventoryCollection = conexion.collection("inventory")
 const reservationsCollection = conexion.collection("reservations")
 const loansCollection = conexion.collection("loans")
 
@@ -270,4 +269,70 @@ export default class Model{
             return Promise.reject(error)
         }
     }
+
+    //Crear producto
+    static async createProduct(product){
+        try {
+
+            return await insertWithTransaction(product, "products")
+
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+    //Actualizar producto
+    static async updateProduct(productId, dataProduct){
+        try {
+
+            const product = await productsCollection.updateOne({id:productId},{$set:dataProduct});
+                if(product.acknowledged && product.matchedCount>0)
+                {
+                    console.log("Datos actualizados correctamente");
+                    return {status:400, message:"Datos actualizados correctamente." }
+                }
+                else{
+                    return {status:400, message:"No fue posible actualizar datos." } 
+                }
+            //return product
+
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+
+    //Eliminar producto
+    static async deleteProduct(productId){
+        try {
+
+            const product= await productsCollection.deleteOne({id:productId});
+            if(product.acknowledged && product.deletedCount>0)
+            {
+                //console.log("Producto eliminado correctamente");
+                return  {status:400, message: "Producto eliminado Correctamente"} 
+            }
+            return product
+            
+
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+
+    //Buscar todas las reservas
+    static async getAllReserve(){
+        try {
+
+            const reserve= await reservationsCollection.find().toArray();
+            if(!reserve)
+            {
+                return  {status:400, message: "No hay reservas"} 
+            }
+            return reserve
+            
+
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+
 }

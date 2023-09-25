@@ -9,8 +9,7 @@ export default async function insertWithTransaction(data,collection) {
 
         const model={
             "users": "usersID",
-            "products":"productsID",
-            "inventory":"inventoryID",
+            "products":"productsID",            
             "reservations":"reservationsID",
             "loans":"loansID"
         }
