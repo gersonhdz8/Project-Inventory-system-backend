@@ -11,9 +11,9 @@ export default class ClientController{
         }
     }
 
-    static async getAllClients(req,res,next){
+    static async getAllUserClients(req,res,next){
         try {
-            const client = await Model.getAllClient()            
+            const client = await Model.getAllUserClients()            
             res.status(200).json(client);
         } catch (error) {
             next(error); 

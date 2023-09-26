@@ -203,7 +203,7 @@ db.createCollection("reservations", {
                 },
                 status: {
                     bsonType: "string",
-                    enum: ["Pendiente", "Aprobada", "Rechazada", "Cancelada"],
+                    enum: ["Pendiente", "Aprobada", "Rechazada", "Cancelada","Completada"],
                     description: "Estado de la reserva"
                 }
             },

@@ -1,5 +1,6 @@
 import connect from "../config/mongoDB.js";
 import dotenv from "dotenv"
+import { ObjectId } from "mongodb";
 import insertWithTransaction from "../helpers/transaction.js";
 
 dotenv.config("../")
@@ -263,6 +264,39 @@ export default class Model{
         try {
 
             const reserve= await reservationsCollection.updateOne({id:reserveId},{$set:{status: "Cancelada"}})
+            return reserve
+
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+    //Aceptar una reserva
+    static async acceptedReserve(reserveId){
+        try {
+
+            const reserve= await reservationsCollection.updateOne({_id: ObjectId(reserveId)},{$set:{status: "Aprobada"}})
+            return reserve
+
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+    //Rechazar una reserva
+    static async rejectReserve(reserveId){
+        try {
+
+            const reserve= await reservationsCollection.updateOne({_id: ObjectId(reserveId)},{$set:{status: "Rechazada"}})
+            return reserve
+
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+    //Rechazar una reserva
+    static async completedReserve(reserveId){
+        try {
+
+            const reserve= await reservationsCollection.updateOne({_id: ObjectId(reserveId)},{$set:{status: "Completada"}})
             return reserve
 
         } catch (error) {

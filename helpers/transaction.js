@@ -33,9 +33,9 @@ export default async function insertWithTransaction(data,collection) {
             } 
                     
             const modelCollection = conexion.db().collection(collection);
-            await modelCollection.insertOne(data,{ session });
+            const idObject= await modelCollection.insertOne(data,{ session });
             await session.commitTransaction();
-            return{message:"Creación Exitosa"}
+            return{idObject,message:"Creación Exitosa"}
         }
         catch (error)
         {

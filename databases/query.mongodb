@@ -116,7 +116,7 @@ db.getCollection("products").insertOne({
     name: "Secretos de la Naturaleza",
     description: "Sumérgete en un mundo de maravillas naturales y secretos por descubrir con 'Secretos de la Naturaleza'. Este libro te llevará a explorar los misterios de la madre naturaleza y su belleza indomable.",
     image_url: "https://static.rfstat.com/gm-media/template/234/screen/10000/style/10046/3d9cce8128a8_1x.jpeg",
-    category: ["Naturaleza", "Descubrimientos"],
+    category: ["Naturaleza", "Descubrimientos"],    
     
 })
 
@@ -124,12 +124,12 @@ db.getCollection("products").insertOne({
 use("inventorySystem")
 db.getCollection("reservations").insertOne({
 
-    id: 1,
-    productId: 1,
-    dni: "123456789A",
-    customerName: "Juan Pérez",
-    date: new Date("2023-09-25T10:00:00Z"),
-    status: "Pendiente"
+        id:12,
+        products: [1,3],
+        dni: "123456789Ahaa",
+        customerName: "Juan Pérezmaaa",
+        date: "2023-09-25T10:00:00Z" 
+    
     
 })
 
