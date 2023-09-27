@@ -26,30 +26,15 @@ export default class ReserveController{
             next(error); 
         }
     }
-    static async acceptedReserve(req,res,next){
+    static async statusReserve(req,res,next){
         try {
-            const reserve = await Model.acceptedReserve(req.params.reserveId)            
+            const reserve = await Model.statusReserve(req.params.reserveId, req.params.status)            
             res.status(200).json(reserve);
         } catch (error) {
             next(error); 
         }
     }
-    static async rejectReserve(req,res,next){
-        try {
-            const reserve = await Model.rejectReserve(req.params.reserveId)            
-            res.status(200).json(reserve);
-        } catch (error) {
-            next(error); 
-        }
-    }
-    static async completedReserve(req,res,next){
-        try {
-            const reserve = await Model.completedReserve(req.params.reserveId)            
-            res.status(200).json(reserve);
-        } catch (error) {
-            next(error); 
-        }
-    }
+    
 
     static async getAllReserve(req,res,next){
         try {

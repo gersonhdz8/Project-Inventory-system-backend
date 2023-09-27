@@ -13,7 +13,7 @@ export default class AdminController{
 
     static async getAllAdmin(req,res,next){
         try {
-            const admin = await Model.getAllAdmin()            
+            const admin = await Model.getAllUserAdmin()            
             res.status(200).json(admin);
         } catch (error) {
             next(error); 

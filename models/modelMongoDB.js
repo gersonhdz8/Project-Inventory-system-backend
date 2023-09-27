@@ -270,39 +270,17 @@ export default class Model{
             return Promise.reject(error)
         }
     }
-    //Aceptar una reserva
-    static async acceptedReserve(reserveId){
+    //Cambiar el estado de una reserva (Aceptada,Rechazada,Completada)Aceptar una reserva
+    static async statusReserve(reserveId,status){
         try {
 
-            const reserve= await reservationsCollection.updateOne({_id: ObjectId(reserveId)},{$set:{status: "Aprobada"}})
+            const reserve= await reservationsCollection.updateOne({_id: ObjectId(reserveId)},{$set:{status: status}})
             return reserve
 
         } catch (error) {
             return Promise.reject(error)
         }
-    }
-    //Rechazar una reserva
-    static async rejectReserve(reserveId){
-        try {
-
-            const reserve= await reservationsCollection.updateOne({_id: ObjectId(reserveId)},{$set:{status: "Rechazada"}})
-            return reserve
-
-        } catch (error) {
-            return Promise.reject(error)
-        }
-    }
-    //Completar una reserva
-    static async completedReserve(reserveId){
-        try {
-
-            const reserve= await reservationsCollection.updateOne({_id: ObjectId(reserveId)},{$set:{status: "Completada"}})
-            return reserve
-
-        } catch (error) {
-            return Promise.reject(error)
-        }
-    }
+    }    
 
     //Crear producto
     static async createProduct(product){
@@ -368,5 +346,39 @@ export default class Model{
             return Promise.reject(error)
         }
     }
+
+    //Crear préstamo
+    static async createLoan(loan){
+        try {
+
+            return await insertWithTransaction(loan, "loans")
+
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+    //Cambiar el estado de un prestamo (En préstamo,Devuelto,Retraso en devolución)
+    static async statusReserve(loanId,status){
+        try {
+
+            const reserve= await reservationsCollection.updateOne({_id: ObjectId(loanId)},{$set:{status: status}})
+            return reserve
+
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    } 
+
+    //Cambiar el rol de usuario
+    static async updateUserRole(userId,status){
+        try {
+
+            const reserve= await reservationsCollection.updateOne({_id: userId},{$set:{status: status}})
+            return reserve
+
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    } 
 
 }

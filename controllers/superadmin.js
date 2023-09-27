@@ -37,4 +37,13 @@ export default class SuperadminController{
             next(error); 
         }
     }
+    static async updateUserRole(req,res,next){
+
+        try {
+            const superadmin = await Model.updateUserRol(req.params.userId, req.params.role)            
+            res.status(200).json(superadmin);
+        } catch (error) {
+            next(error); 
+        }
+    }
 }

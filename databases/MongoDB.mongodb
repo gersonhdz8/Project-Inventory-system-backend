@@ -233,12 +233,12 @@ db.createCollection("loans", {
             required: [
                 "_id",
                 "id",
-                "productId",
+                "products",
                 "dni",
                 "customerName",
                 "date",
                 "returnDate",
-                "quantity"
+                "status"                
             ],
             properties: {
                 _id: {
@@ -253,9 +253,15 @@ db.createCollection("loans", {
                     bsonType: "array",
                     description: "Productos para reservar",
                     items: {
-                        bsonType: "int",
-                        description:"Número ID del producto a prestar"
-                    },
+                        bsonType: "object",
+                        properties: {
+                            id_product: {
+                                bsonType: "int",
+                                description: "ID del producto"
+                            }                            
+                        },
+                        required: ["id_product"]
+                    }
                 },
                 
                 dni: {
@@ -267,18 +273,18 @@ db.createCollection("loans", {
                     description: "Nombre del cliente"
                 },
                 date: {
-                    bsonType: "date",
+                    bsonType: "string",
                     description: "Fecha del préstamo"
                 },
                 returnDate: {
-                    bsonType: "date",
+                    bsonType: "string",
                     description: "Fecha de devolución"
                 },
-                quantity: {
-                    bsonType: "int",
-                    minimum: 1,
-                    description: "Cantidad del producto prestado"
-                }
+                status:{
+                    bsonType: "string",
+                    enum: ["En préstamo", "Devuelto", "Retraso en devolución"],
+                    description: "Estado del préstamo"
+                }               
             },
             additionalProperties: false,
         },

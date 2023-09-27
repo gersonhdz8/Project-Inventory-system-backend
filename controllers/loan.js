@@ -45,5 +45,15 @@ export default class LoanController{
         } catch (error) {
             next(error); 
         }
-    } 
+    }
+    static async statusLoan(req,res,next){
+
+        try {
+            const loan = await Model.statusLoan(req.params.loanId, req.params.status)            
+            res.status(200).json(loan);
+        } catch (error) {
+            next(error); 
+        }
+    }
+
 }
