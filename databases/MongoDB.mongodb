@@ -120,8 +120,7 @@ db.createCollection("inventory", {
             required: [
                 "_id",
                 "id",
-                "productId",
-                "quantity",
+                "productId",                
                 "price",
                 "location"
             ],
@@ -186,8 +185,19 @@ db.createCollection("reservations", {
                     bsonType: "array",
                     description: "Productos para reservar",
                     items: {
-                        bsonType: "int"
-                    },
+                        bsonType: "object",
+                        properties: {
+                            id_product: {
+                                bsonType: "int",
+                                description: "ID del producto"
+                            },
+                            cantidad_reserva: {
+                                bsonType: "int",
+                                description: "Cantidad a reservar"
+                            }
+                        },
+                        required: ["id_product", "cantidad_reserva"]
+                    }
                 },
                 dni: {
                     bsonType: "string", 
@@ -239,10 +249,15 @@ db.createCollection("loans", {
                     bsonType: "int",
                     description: "ID único del documento"
                 },
-                productId: {
-                    bsonType: "int",
-                    description: "ID del producto"
+                products: {
+                    bsonType: "array",
+                    description: "Productos para reservar",
+                    items: {
+                        bsonType: "int",
+                        description:"Número ID del producto a prestar"
+                    },
                 },
+                
                 dni: {
                     bsonType: "string", 
                     description: "Número de identificación del usuario "                   

@@ -17,6 +17,8 @@ router.patch("/acepptReserve/:reserveId",ReserveController.acceptedReserve)
 router.patch("/rejectReserve/:reserveId",ReserveController.rejectReserve)
 router.patch("/completedReserve/:reserveId",ReserveController.completedReserve)
 
+router.post("/createLoan",LoanController.createLoan)
+
 router.get("/getAllClients",ClientController.getAllUserClients)
 
 

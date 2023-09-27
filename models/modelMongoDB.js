@@ -292,7 +292,7 @@ export default class Model{
             return Promise.reject(error)
         }
     }
-    //Rechazar una reserva
+    //Completar una reserva
     static async completedReserve(reserveId){
         try {
 
