@@ -59,51 +59,29 @@ db.createCollection("products", {
     validator: {
         $jsonSchema: {
             bsonType: "object",
-            title: "users",
+            title: "products",
             required: [
                 "_id",
                 "id",
-                "name",
-                "description",
-                "image_url",                
-                "category",
-                "inventory"               
+                "serial",                                
+                "status"               
             ],
             properties: {
                 _id: { bsonType: "objectId" },
                 id: {
                     bsonType: "int",                   
                 },
-                name: {
+                serial: {
                     bsonType: "string",                    
                 },
-                description: {
-                    bsonType: "string"                    
-                },
-                image_url: {
-                    bsonType: "string",                    
-                },
-                category: {
-                    bsonType: "array",
-                    items: {
-                        bsonType: "string"
-                    },                    
-                },
-                inventory:{
-                    bsonType:"object",
-                    properties:{
-                        quantity:{
-                            bsonType:"int"
-                        },
-                        price:{
-                            bsonType:"int"
-                        },
-                        location:{
-                            bsonType:"string"
-                        }
-                    }
-
+                status: {
+                    bsonType: "string",
+                    enum: ["En inventario", "En préstamo"],
+                    description: "Estado de inventario"
                 }
+                
+                
+                
             },
             additionalProperties: false,
         },
@@ -120,7 +98,12 @@ db.createCollection("inventory", {
             required: [
                 "_id",
                 "id",
-                "productId",                
+                "serialGroup",
+                "name",
+                "description",
+                "image_url",                
+                "category", 
+                "quantity",
                 "price",
                 "location"
             ],
@@ -132,25 +115,44 @@ db.createCollection("inventory", {
                 id: {
                     bsonType: "int",                   
                 },
-                productId: {
-                    bsonType: "int",
-                    description: "ID del producto"
+                serialGroup: {
+                    bsonType: "string",
+                    description: "Serial ID del producto"
+                },
+                description: {
+                    bsonType: "string",                    
+                    description: "Descripcion del producto"
+                },
+                image_url: {
+                    bsonType: "string",                    
+                    description: "Imagen del producto"
+                },
+                category: {
+                    bsonType: "array",
+                    items: {
+                        bsonType: "string"
+                    },                    
                 },
                 quantity: {
                     bsonType: "int",
-                    minimum: 0,
-                    description: "Cantidad disponible del producto"
+                    description: "Cantidad de productos en posesión"
+                },
+                inStock: {
+                    bsonType: "int",
+                    description: "Cantidad de productos en el inventario"
+                },
+                inLoan: {
+                    bsonType: "int",
+                    description: "Cantidad de productos en préstamo"
                 },
                 price: {
                     bsonType: "int",
-                    minimum: 0,
                     description: "Precio unitario del producto"
                 },
                 location: {
                     bsonType: "string",
                     description: "Ubicación física del producto en el almacén"
-                }
-                            
+                } 
             },
             additionalProperties: false,
         },
