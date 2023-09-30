@@ -1,0 +1,651 @@
+db.products.insertMany([
+    {
+        id: 1,
+        serial: "A1",
+        status: "En inventario"
+    },
+    {
+        id: 2,
+        serial: "A1",
+        status: "En inventario"
+    },
+    {
+        id: 3,
+        serial: "A1",
+        status: "En inventario"
+    },
+    {
+        id: 4,
+        serial: "A1",
+        status: "En inventario"
+    },
+    {
+        id: 5,
+        serial: "A1",
+        status: "En inventario"
+    },
+    {
+        id: 6,
+        serial: "B2",
+        status: "En inventario"
+    },
+    {
+        id: 7,
+        serial: "B2",
+        status: "En inventario"
+    },
+    {
+        id: 8,
+        serial: "B2",
+        status: "En inventario"
+    },
+    {
+        id: 9,
+        serial: "B2",
+        status: "En inventario"
+    },
+    {
+        id: 10,
+        serial: "C3",
+        status: "En inventario"
+    },
+    {
+        id: 11,
+        serial: "C3",
+        status: "En inventario"
+    },
+    {
+        id: 12,
+        serial: "C3",
+        status: "En inventario"
+    },
+    {
+        id: 13,
+        serial: "D4",
+        status: "En inventario"
+    },
+    {
+        id: 14,
+        serial: "D4",
+        status: "En inventario"
+    },
+    {
+        id: 15,
+        serial: "D4",
+        status: "En inventario"
+    },
+    {
+        id: 16,
+        serial: "D4",
+        status: "En inventario"
+    },
+    {
+        id: 17,
+        serial: "D4",
+        status: "En inventario"
+    },
+    {
+        id: 18,
+        serial: "E5",
+        status: "En inventario"
+    },
+    {
+        id: 19,
+        serial: "E5",
+        status: "En inventario"
+    },
+    {
+        id: 20,
+        serial: "E5",
+        status: "En inventario"
+    },
+    {
+        id: 21,
+        serial: "E5",
+        status: "En inventario"
+    },
+    {
+        id: 22,
+        serial: "E5",
+        status: "En inventario"
+    },
+    {
+        id: 23,
+        serial: "F6",
+        status: "En inventario"
+    },
+    {
+        id: 24,
+        serial: "F6",
+        status: "En inventario"
+    },
+    {
+        id: 25,
+        serial: "F6",
+        status: "En inventario"
+    },
+    {
+        id: 26,
+        serial: "F6",
+        status: "En inventario"
+    },
+    {
+        id: 27,
+        serial: "F6",
+        status: "En inventario"
+    },
+    {
+        id: 28,
+        serial: "G7",
+        status: "En inventario"
+    },
+    {
+        id: 29,
+        serial: "G7",
+        status: "En inventario"
+    },
+    {
+        id: 30,
+        serial: "G7",
+        status: "En inventario"
+    },
+    {
+        id: 31,
+        serial: "G7",
+        status: "En inventario"
+    },
+    {
+        id: 32,
+        serial: "H8",
+        status: "En inventario"
+    },
+    {
+        id: 33,
+        serial: "H8",
+        status: "En inventario"
+    },
+    {
+        id: 34,
+        serial: "H8",
+        status: "En inventario"
+    },
+    {
+        id: 35,
+        serial: "H8",
+        status: "En inventario"
+    },
+    {
+        id: 36,
+        serial: "H8",
+        status: "En inventario"
+    },
+    {
+        id: 37,
+        serial: "I9",
+        status: "En inventario"
+    },
+    {
+        id: 38,
+        serial: "I9",
+        status: "En inventario"
+    },
+    {
+        id: 39,
+        serial: "I9",
+        status: "En inventario"
+    },
+    {
+        id: 40,
+        serial: "I9",
+        status: "En inventario"
+    },
+    {
+        id: 41,
+        serial: "I9",
+        status: "En inventario"
+    },
+    {
+        id: 42,
+        serial: "J10",
+        status: "En inventario"
+    },
+    {
+        id: 43,
+        serial: "J10",
+        status: "En inventario"
+    },
+    {
+        id: 44,
+        serial: "J10",
+        status: "En inventario"
+    },
+    {
+        id: 45,
+        serial: "J10",
+        status: "En inventario"
+    },
+    {
+        id: 46,
+        serial: "K11",
+        status: "En inventario"
+    },
+    {
+        id: 47,
+        serial: "K11",
+        status: "En inventario"
+    },
+    {
+        id: 48,
+        serial: "K11",
+        status: "En inventario"
+    },
+    {
+        id: 49,
+        serial: "L12",
+        status: "En inventario"
+    },
+    {
+        id: 50,
+        serial: "L12",
+        status: "En inventario"
+    },
+    {
+        id: 51,
+        serial: "L12",
+        status: "En inventario"
+    },
+    {
+        id: 52,
+        serial: "L12",
+        status: "En inventario"
+    },
+    {
+        id: 53,
+        serial: "L12",
+        status: "En inventario"
+    },
+    {
+        id: 54,
+        serial: "M13",
+        status: "En inventario"
+    },
+    {
+        id: 55,
+        serial: "M13",
+        status: "En inventario"
+    },
+    {
+        id: 56,
+        serial: "M13",
+        status: "En inventario"
+    },
+    {
+        id: 57,
+        serial: "N14",
+        status: "En inventario"
+    },
+    {
+        id: 58,
+        serial: "N14",
+        status: "En inventario"
+    },
+    {
+        id: 59,
+        serial: "N14",
+        status: "En inventario"
+    },
+    {
+        id: 60,
+        serial: "N14",
+        status: "En inventario"
+    },
+    {
+        id: 61,
+        serial: "N14",
+        status: "En inventario"
+    },
+    {
+        id: 62,
+        serial: "O15",
+        status: "En inventario"
+    },
+    {
+        id: 63,
+        serial: "O15",
+        status: "En inventario"
+    },
+    {
+        id: 64,
+        serial: "O15",
+        status: "En inventario"
+    },
+    {
+        id: 65,
+        serial: "O15",
+        status: "En inventario"
+    },
+    {
+        id: 66,
+        serial: "P16",
+        status: "En inventario"
+    },
+    {
+        id: 67,
+        serial: "P16",
+        status: "En inventario"
+    },
+    {
+        id: 68,
+        serial: "P16",
+        status: "En inventario"
+    },
+    {
+        id: 69,
+        serial: "Q17",
+        status: "En inventario"
+    },
+    {
+        id: 70,
+        serial: "Q17",
+        status: "En inventario"
+    },
+    {
+        id: 71,
+        serial: "Q17",
+        status: "En inventario"
+    },
+    {
+        id: 72,
+        serial: "Q17",
+        status: "En inventario"
+    },
+    {
+        id: 73,
+        serial: "R18",
+        status: "En inventario"
+    },
+    {
+        id: 74,
+        serial: "R18",
+        status: "En inventario"
+    },
+    {
+        id: 75,
+        serial: "R18",
+        status: "En inventario"
+    },
+    {
+        id: 76,
+        serial: "R18",
+        status: "En inventario"
+    },
+    {
+        id: 77,
+        serial: "R18",
+        status: "En inventario"
+    },
+    {
+        id: 78,
+        serial: "S19",
+        status: "En inventario"
+    },
+    {
+        id: 79,
+        serial: "S19",
+        status: "En inventario"
+    },
+    {
+        id: 80,
+        serial: "S19",
+        status: "En inventario"
+    },
+    {
+        id: 81,
+        serial: "S19",
+        status: "En inventario"
+    },
+    {
+        id: 82,
+        serial: "T20",
+        status: "En inventario"
+    },
+    {
+        id: 83,
+        serial: "T20",
+        status: "En inventario"
+    },
+    {
+        id: 84,
+        serial: "T20",
+        status: "En inventario"
+    },
+    {
+        id: 85,
+        serial: "T20",
+        status: "En inventario"
+    },
+    {
+        id: 86,
+        serial: "T20",
+        status: "En inventario"
+    },
+    {
+        id: 87,
+        serial: "U21",
+        status: "En inventario"
+    },
+    {
+        id: 88,
+        serial: "U21",
+        status: "En inventario"
+    },
+    {
+        id: 89,
+        serial: "U21",
+        status: "En inventario"
+    },
+    {
+        id: 90,
+        serial: "V22",
+        status: "En inventario"
+    },
+    {
+        id: 91,
+        serial: "V22",
+        status: "En inventario"
+    },
+    {
+        id: 92,
+        serial: "V22",
+        status: "En inventario"
+    },
+    {
+        id: 93,
+        serial: "V22",
+        status: "En inventario"
+    },
+    {
+        id: 94,
+        serial: "V22",
+        status: "En inventario"
+    },
+    {
+        id: 95,
+        serial: "W23",
+        status: "En inventario"
+    },
+    {
+        id: 96,
+        serial: "W23",
+        status: "En inventario"
+    },
+    {
+        id: 97,
+        serial: "W23",
+        status: "En inventario"
+    },
+    {
+        id: 98,
+        serial: "W23",
+        status: "En inventario"
+    },
+    {
+        id: 99,
+        serial: "W23",
+        status: "En inventario"
+    },
+    {
+        id: 100,
+        serial: "X24",
+        status: "En inventario"
+    },
+    {
+        id: 101,
+        serial: "X24",
+        status: "En inventario"
+    },
+    {
+        id: 102,
+        serial: "X24",
+        status: "En inventario"
+    },
+    {
+        id: 103,
+        serial: "X24",
+        status: "En inventario"
+    },
+    {
+        id: 104,
+        serial: "X24",
+        status: "En inventario"
+    },
+    {
+        id: 105,
+        serial: "Y25",
+        status: "En inventario"
+    },
+    {
+        id: 106,
+        serial: "Y25",
+        status: "En inventario"
+    },
+    {
+        id: 107,
+        serial: "Y25",
+        status: "En inventario"
+    },
+    {
+        id: 108,
+        serial: "Y25",
+        status: "En inventario"
+    },
+    {
+        id: 109,
+        serial: "Y25",
+        status: "En inventario"
+    },
+    {
+        id: 110,
+        serial: "Z26",
+        status: "En inventario"
+    },
+    {
+        id: 111,
+        serial: "Z26",
+        status: "En inventario"
+    },
+    {
+        id: 112,
+        serial: "Z26",
+        status: "En inventario"
+    },
+    {
+        id: 113,
+        serial: "Z26",
+        status: "En inventario"
+    },
+    {
+        id: 114,
+        serial: "AA27",
+        status: "En inventario"
+    },
+    {
+        id: 115,
+        serial: "AA27",
+        status: "En inventario"
+    },
+    {
+        id: 116,
+        serial: "AA27",
+        status: "En inventario"
+    },
+    {
+        id: 117,
+        serial: "AA27",
+        status: "En inventario"
+    },
+    {
+        id: 118,
+        serial: "BB28",
+        status: "En inventario"
+    },
+    {
+        id: 119,
+        serial: "BB28",
+        status: "En inventario"
+    },
+    {
+        id: 120,
+        serial: "BB28",
+        status: "En inventario"
+    },
+    {
+        id: 121,
+        serial: "BB28",
+        status: "En inventario"
+    },
+    {
+        id: 122,
+        serial: "BB28",
+        status: "En inventario"
+    },
+    {
+        id: 123,
+        serial: "CC29",
+        status: "En inventario"
+    },
+    {
+        id: 124,
+        serial: "CC29",
+        status: "En inventario"
+    },
+    {
+        id: 125,
+        serial: "CC29",
+        status: "En inventario"
+    },
+    {
+        id: 126,
+        serial: "CC29",
+        status: "En inventario"
+    },
+    {
+        id: 127,
+        serial: "DD30",
+        status: "En inventario"
+    },
+    {
+        id: 128,
+        serial: "DD30",
+        status: "En inventario"
+    },
+    {
+        id: 129,
+        serial: "DD30",
+        status: "En inventario"
+    },
+    {
+        id: 130,
+        serial: "DD30",
+        status: "En inventario" 
+}   ])

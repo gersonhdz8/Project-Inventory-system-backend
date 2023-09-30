@@ -78,9 +78,7 @@ db.createCollection("products", {
                     bsonType: "string",
                     enum: ["En inventario", "En préstamo"],
                     description: "Estado de inventario"
-                }
-                
-                
+                }              
                 
             },
             additionalProperties: false,
@@ -104,6 +102,8 @@ db.createCollection("inventory", {
                 "image_url",                
                 "category", 
                 "quantity",
+                "inStock",
+                "inLoan",
                 "price",
                 "location"
             ],
@@ -118,6 +118,10 @@ db.createCollection("inventory", {
                 serialGroup: {
                     bsonType: "string",
                     description: "Serial ID del producto"
+                },
+                name: {
+                    bsonType: "string",                    
+                    description: "Nombre del producto"
                 },
                 description: {
                     bsonType: "string",                    
@@ -135,18 +139,22 @@ db.createCollection("inventory", {
                 },
                 quantity: {
                     bsonType: "int",
+                    minimum:0,
                     description: "Cantidad de productos en posesión"
                 },
                 inStock: {
                     bsonType: "int",
+                    minimum:0,
                     description: "Cantidad de productos en el inventario"
                 },
                 inLoan: {
                     bsonType: "int",
+                    minimum:0,
                     description: "Cantidad de productos en préstamo"
                 },
                 price: {
                     bsonType: "int",
+                    minimum:0,
                     description: "Precio unitario del producto"
                 },
                 location: {
@@ -158,7 +166,8 @@ db.createCollection("inventory", {
         },
     },
 });
-db.inventory.createIndex({ id: 1 , serialGroup: 1 }, { unique: true });
+db.inventory.createIndex({ id: 1 }, { unique: true });
+db.inventory.createIndex({ serialGroup: 1 }, { unique: true });
 
 //Create collection RESERVATIONS
 db.createCollection("reservations", {
@@ -172,7 +181,8 @@ db.createCollection("reservations", {
                 "products",
                 "dni",
                 "customerName",
-                "date"                
+                "date",
+                "status"               
             ],
             properties: {
                 _id: {
@@ -189,8 +199,8 @@ db.createCollection("reservations", {
                     items: {
                         bsonType: "object",
                         properties: {
-                            id_product: {
-                                bsonType: "int",
+                            serialGroup: {
+                                bsonType: "string",
                                 description: "ID del producto"
                             },
                             cantidad_reserva: {
@@ -198,7 +208,7 @@ db.createCollection("reservations", {
                                 description: "Cantidad a reservar"
                             }
                         },
-                        required: ["id_product", "cantidad_reserva"]
+                        required: ["serialGroup", "cantidad_reserva"]
                     }
                 },
                 dni: {
@@ -359,6 +369,7 @@ db.users.insertMany([
     }
 ]);
 //DATA INVENTORY
+use("inventorySystem")
 db.inventory.insertMany([
     {
         
@@ -368,8 +379,8 @@ db.inventory.insertMany([
         description: "Embárcate en una emocionante búsqueda del tesoro en 'La Búsqueda del Tesoro Perdido'. Sigue las pistas y descubre antiguos secretos.",
         image_url: "https://static.rfstat.com/gm-media/template/234/screen/10010/style/10048/e86aae8c3b41_1x.jpeg",
         category: ["Aventura", "Misterio"],
-        quantity: 50,
-        inStock: 50,
+        quantity: 5,
+        inStock: 5,
         inLoan: 0,
         price: 1999,
         location: "Estante A-1"
@@ -382,8 +393,8 @@ db.inventory.insertMany([
         description: "Explora los oscuros secretos de una mansión encantada en 'El Misterio de la Mansión Encantada'. ¿Te atreves a descubrir la verdad?",
         image_url: "https://static.rfstat.com/gm-media/template/234/screen/10012/style/10050/92b9b6fba84d_1x.jpeg",
         category: ["Misterio", "Fantasía"],
-        quantity: 40,
-        inStock: 40,
+        quantity: 4,
+        inStock: 4,
         inLoan: 0,
         price: 1799,
         location: "Estante B-1"
@@ -396,8 +407,8 @@ db.inventory.insertMany([
         description: "Embárcate en una emocionante aventura en la selva en 'Aventuras en la Selva Profunda'. Enfrenta peligros y descubre tesoros ocultos.",
         image_url: "https://static.rfstat.com/gm-media/template/234/screen/10014/style/10052/31b58ea398e6_1x.jpeg",
         category: ["Aventura", "Exploración"],
-        quantity: 30,
-        inStock: 30,
+        quantity: 3,
+        inStock: 3,
         inLoan: 0,
         price: 1299,
         location: "Estante C-7"
@@ -410,8 +421,8 @@ db.inventory.insertMany([
         description: "Descubre los misterios de las antiguas pirámides egipcias en 'El Enigma de la Pirámide'. Este libro te llevará a una búsqueda épica de tesoros y conocimiento.",
         image_url: "https://static.rfstat.com/gm-media/template/234/screen/10026/style/10064/00f140d31ac9_1x.jpeg",
         category: ["Historia", "Arqueología"],
-        quantity: 65,
-        inStock: 65,
+        quantity: 6,
+        inStock: 6,
         inLoan: 0,
         price: 2099,
         location: "Estante D-3"
@@ -424,8 +435,8 @@ db.inventory.insertMany([
         description: "Sobrevive en una isla desierta llena de misterios en 'El Misterio de la Isla Desierta'. Un náufrago se enfrenta a desafíos mortales y secretos ocultos.",
         image_url: "https://static.rfstat.com/gm-media/template/234/screen/10028/style/10066/59c760b12275_1x.jpeg",
         category: ["Aventura", "Misterio"],
-        quantity: 50,
-        inStock: 50,
+        quantity: 5,
+        inStock: 5,
         inLoan: 0,
         price: 2499,
         location: "Estante E-3"
@@ -438,8 +449,8 @@ db.inventory.insertMany([
         description: "Viaja en el tiempo a la antigua Roma y descubre 'Los Tesoros de la Antigua Roma'. Este libro te llevará a explorar las grandezas de la civilización romana.",
         image_url: "https://static.rfstat.com/gm-media/template/234/screen/10030/style/10068/cd99d73ad9f5_1x.jpeg",
         category: ["Historia", "Arqueología"],
-        quantity: 40,
-        inStock: 40,
+        quantity: 4,
+        inStock: 4,
         inLoan: 0,
         price: 1799,
         location: "Estante F-3"
@@ -452,8 +463,8 @@ db.inventory.insertMany([
         description: "Acompaña a Alicia en su viaje en el País de las Maravillas con 'La Aventura en el País de las Maravillas'. Descubre criaturas extravagantes y paisajes asombrosos.",
         image_url: "https://static.rfstat.com/gm-media/template/234/screen/10034/style/10072/0879cf6be2a0_1x.jpeg",
         category: ["Fantasía", "Aventura"],
-        quantity: 55,
-        inStock: 55,
+        quantity: 5,
+        inStock: 5,
         inLoan: 0,
         price: 1499,
         location: "Estante A-8"
@@ -466,8 +477,8 @@ db.inventory.insertMany([
         description: "Embárcate en un viaje cósmico en 'Los Misterios del Espacio Profundo'. Descubre agujeros negros, nebulosas y secretos insondables del universo.",
         image_url: "https://static.rfstat.com/gm-media/template/234/screen/10036/style/10074/7aa53859af61_1x.jpeg",
         category: ["Astronomía", "Ciencia"],
-        quantity: 70,
-        inStock: 70,
+        quantity: 7,
+        inStock: 7,
         inLoan: 0,
         price: 1999,
         location: "Estante B-8"
@@ -480,8 +491,8 @@ db.inventory.insertMany([
         description: "Únete a una emocionante búsqueda del tesoro en 'El Tesoro de los Piratas'. Sigue las pistas y aventúrate en la vida de los audaces corsarios del pasado.",
         image_url: "https://static.rfstat.com/gm-media/template/234/screen/10038/style/10076/c9a9c67a34d3_1x.jpeg",
         category: ["Aventura", "Historia"],
-        quantity: 45,
-        inStock: 45,
+        quantity: 4,
+        inStock: 4,
         inLoan: 0,
         price: 1899,
         location: "Estante C-8"
@@ -494,8 +505,8 @@ db.inventory.insertMany([
         description: "Adéntrate en el mágico 'Reino de los Elfos'. Este libro te llevará a un mundo de magia, criaturas místicas y aventuras inolvidables.",
         image_url: "https://static.rfstat.com/gm-media/template/234/screen/10040/style/10078/746f7a0eaf1a_1x.jpeg",
         category: ["Fantasía", "Aventura"],
-        quantity: 60,
-        inStock: 60,
+        quantity: 6,
+        inStock: 6,
         inLoan: 0,
         price: 2099,
         location: "Estante D-6"
@@ -508,8 +519,8 @@ db.inventory.insertMany([
         description: "Descubre los secretos de Stonehenge en 'El Enigma de Stonehenge'. Este libro te llevará a través de la historia y la misteriosa construcción de este monumento.",
         image_url: "https://static.rfstat.com/gm-media/template/234/screen/10042/style/10080/86d72c8ddefa_1x.jpeg",
         category: ["Misterio", "Arqueología"],
-        quantity: 35,
-        inStock: 35,
+        quantity: 3,
+        inStock: 3,
         inLoan: 0,
         price: 1599,
         location: "Estante E-6"
@@ -522,8 +533,8 @@ db.inventory.insertMany([
         description: "Únete a una épica búsqueda en 'La Búsqueda del Grial Sagrado'. Descubre los mitos y leyendas que rodean el Santo Grial en esta aventura legendaria.",
         image_url: "https://static.rfstat.com/gm-media/template/234/screen/10044/style/10082/a7b5f4ca636d_1x.jpeg",
         category: ["Fantasía", "Aventura"],
-        quantity: 50,
-        inStock: 50,
+        quantity: 5,
+        inStock: 5,
         inLoan: 0,
         price: 2499,
         location: "Estante A-9"
@@ -536,8 +547,8 @@ db.inventory.insertMany([
         description: "Explora los misterios sumergidos de la Atlántida en este libro intrigante. Desvela los secretos de una antigua civilización perdida en las profundidades del océano.",
         image_url: "https://static.rfstat.com/gm-media/template/234/screen/10046/style/10084/8d365c75ad75_1x.jpeg",
         category: ["Historia", "Misterio"],
-        quantity: 45,
-        inStock: 45,
+        quantity: 4,
+        inStock: 4,
         inLoan: 0,
         price: 2199,
         location: "Estante B-9"
@@ -550,8 +561,8 @@ db.inventory.insertMany([
         description: "Embárcate en una aventura en la selva llena de misterios en 'El Secreto de la Selva Perdida'. Descubre civilizaciones antiguas y fauna exótica en este libro emocionante.",
         image_url: "https://static.rfstat.com/gm-media/template/234/screen/10048/style/10086/53754a8c224a_1x.jpeg",
         category: ["Aventura", "Misterio"],
-        quantity: 55,
-        inStock: 55,
+        quantity: 5,
+        inStock: 5,
         inLoan: 0,
         price: 1999,
         location: "Estante C-9"
@@ -564,8 +575,8 @@ db.inventory.insertMany([
         description: "Explora las vastas regiones del espacio en 'La Odisea del Explorador Espacial'. Acompaña a un intrépido explorador en su búsqueda de planetas desconocidos y civilizaciones alienígenas.",
         image_url: "https://static.rfstat.com/gm-media/template/234/screen/10050/style/10088/36d2ec3f6e16_1x.jpeg",
         category: ["Ciencia Ficción", "Aventura Espacial"],
-        quantity: 60,
-        inStock: 60,
+        quantity: 6,
+        inStock: 6,
         inLoan: 0,
         price: 1499,
         location: "Estante D-5"
@@ -578,8 +589,8 @@ db.inventory.insertMany([
         description: "Descubre el fascinante mundo de los dragones en 'El Libro de los Dragones'. Este libro te llevará a través de leyendas y mitos sobre estas criaturas mágicas.",
         image_url: "https://static.rfstat.com/gm-media/template/234/screen/10052/style/10090/cb9f9c038d69_1x.jpeg",
         category: ["Fantasía", "Mitología"],
-        quantity: 35,
-        inStock: 35,
+        quantity: 3,
+        inStock: 3,
         inLoan: 0,
         price: 1599,
         location: "Estante E-5"
@@ -592,8 +603,8 @@ db.inventory.insertMany([
         description: "Adéntrate en el enigma del círculo de piedras en 'El Misterio del Círculo de Piedras'. Descubre los secretos ancestrales de estos monumentos misteriosos.",
         image_url: "https://static.rfstat.com/gm-media/template/234/screen/10054/style/10092/15be9885e5d3_1x.jpeg",
         category: ["Misterio", "Arqueología"],
-        quantity: 40,
-        inStock: 40,
+        quantity: 4,
+        inStock: 4,
         inLoan: 0,
         price: 1999,
         location: "Estante F-5"
@@ -606,8 +617,8 @@ db.inventory.insertMany([
         description: "Explora las pirámides de Egipto en 'El Secreto de las Pirámides'. Descubre los misterios de la construcción y los tesoros ocultos dentro de estas monumentales estructuras.",
         image_url: "https://static.rfstat.com/gm-media/template/234/screen/10056/style/10094/a3f8a9c6f1f3_1x.jpeg",
         category: ["Historia", "Arqueología"],
-        quantity: 50,
-        inStock: 50,
+        quantity: 5,
+        inStock: 5,
         inLoan: 0,
         price: 2199,
         location: "Estante A-4"
@@ -620,8 +631,8 @@ db.inventory.insertMany([
         description: "Únete a una emocionante búsqueda del diamante perdido en 'La Búsqueda del Diamante Perdido'. Resuelve acertijos y enigmas para encontrar esta joya preciosa.",
         image_url: "https://static.rfstat.com/gm-media/template/234/screen/10058/style/10096/0a1a021dd85d_1x.jpeg",
         category: ["Aventura", "Misterio"],
-        quantity: 45,
-        inStock: 45,
+        quantity: 4,
+        inStock: 4,
         inLoan: 0,
         price: 1799,
         location: "Estante B-4"
@@ -634,8 +645,8 @@ db.inventory.insertMany([
         description: "Descubre los misterios de la alquimia en 'Los Secretos de la Alquimia'. Este libro te llevará a través de la búsqueda de la piedra filosofal y el elixir de la vida.",
         image_url: "https://static.rfstat.com/gm-media/template/234/screen/10060/style/10098/1a1699728ff1_1x.jpeg",
         category: ["Historia", "Misterio"],
-        quantity: 60,
-        inStock: 60,
+        quantity: 6,
+        inStock: 6,
         inLoan: 0,
         price: 2499,
         location: "Estante C-4"
@@ -648,8 +659,8 @@ db.inventory.insertMany([
         description: "Acompaña a una expedición intrépida en 'La Expedición a lo Desconocido'. Explora regiones inexploradas y descubre maravillas ocultas en este libro emocionante.",
         image_url: "https://static.rfstat.com/gm-media/template/234/screen/10062/style/10100/e13522be3a39_1x.jpeg",
         category: ["Aventura", "Exploración"],
-        quantity: 35,
-        inStock: 35,
+        quantity: 3,
+        inStock: 3,
         inLoan: 0,
         price: 1299,
         location: "Estante D-4"
@@ -662,8 +673,8 @@ db.inventory.insertMany([
         description: "Descubre los enigmas de las esfinges en 'El Enigma de las Esfinges'. Este libro te llevará a través de la historia y el simbolismo de estas misteriosas criaturas.",
         image_url: "https://static.rfstat.com/gm-media/template/234/screen/10064/style/10102/3ef5e1f84bc7_1x.jpeg",
         category: ["Historia", "Misterio"],
-        quantity: 40,
-        inStock: 40,
+        quantity: 4,
+        inStock: 4,
         inLoan: 0,
         price: 1499,
         location: "Estante E-4"
@@ -676,8 +687,8 @@ db.inventory.insertMany([
         description: "Adéntrate en el legado de los Caballeros Templarios en este libro fascinante. Descubre los secretos de esta orden medieval enigmática.",
         image_url: "https://static.rfstat.com/gm-media/template/234/screen/10066/style/10104/c9940d6e2d49_1x.jpeg",
         category: ["Historia", "Misterio"],
-        quantity: 55,
-        inStock: 55,
+        quantity: 5,
+        inStock: 5,
         inLoan: 0,
         price: 1999,
         location: "Estante F-4"
@@ -690,8 +701,8 @@ db.inventory.insertMany([
         description: "Explora los misterios del antiguo Egipto en este libro intrigante. Viaja a través del tiempo y descubre la grandeza de esta civilización ancestral.",
         image_url: "https://static.rfstat.com/gm-media/template/234/screen/10068/style/10106/32006c4d8cc3_1x.jpeg",
         category: ["Historia", "Arqueología"],
-        quantity: 45,
-        inStock: 45,
+        quantity: 4,
+        inStock: 4,
         inLoan: 0,
         price: 2199,
         location: "Estante A-5"
@@ -704,8 +715,8 @@ db.inventory.insertMany([
         description: "Viaja atrás en el tiempo y vive una aventura en la Tierra de los Dinosaurios. Descubre criaturas prehistóricas en este libro fascinante.",
         image_url: "https://static.rfstat.com/gm-media/template/234/screen/10070/style/10108/0b5542e51f8f_1x.jpeg",
         category: ["Aventura", "Paleontología"],
-        quantity: 50,
-        inStock: 50,
+        quantity: 5,
+        inStock: 5,
         inLoan: 0,
         price: 1899,
         location: "Estante B-5"
@@ -718,8 +729,8 @@ db.inventory.insertMany([
         description: "Descubre los enigmas de la antigua Grecia en este libro intrigante. Acompaña a los héroes y dioses de la mitología griega en sus aventuras épicas.",
         image_url: "https://static.rfstat.com/gm-media/template/234/screen/10072/style/10110/4b472a9e8690_1x.jpeg",
         category: ["Historia", "Mitología"],
-        quantity: 60,
-        inStock: 60,
+        quantity: 6,
+        inStock: 6,
         inLoan: 0,
         price: 2499,
         location: "Estante C-5"
@@ -732,8 +743,8 @@ db.inventory.insertMany([
         description: "Únete a una búsqueda emocionante en 'El Tesoro de los Faraones'. Adéntrate en las tumbas de los faraones egipcios y descubre sus riquezas ocultas.",
         image_url: "https://static.rfstat.com/gm-media/template/234/screen/10074/style/10112/a47798b24c7e_1x.jpeg",
         category: ["Historia", "Arqueología"],
-        quantity: 35,
-        inStock: 35,
+        quantity: 3,
+        inStock: 3,
         inLoan: 0,
         price: 1299,
         location: "Estante D-7"
@@ -746,8 +757,8 @@ db.inventory.insertMany([
         description: "Embárcate en una búsqueda legendaria en 'La Búsqueda del Ojo de Horus'. Sigue las huellas del antiguo dios egipcio en esta emocionante aventura.",
         image_url: "https://static.rfstat.com/gm-media/template/234/screen/10076/style/10114/d498ff0499df_1x.jpeg",
         category: ["Historia", "Misterio"],
-        quantity: 40,
-        inStock: 40,
+        quantity: 4,
+        inStock: 4,
         inLoan: 0,
         price: 1599,
         location: "Estante E-7"
@@ -760,8 +771,8 @@ db.inventory.insertMany([
         description: "Explora los misterios de la Edad Media en este libro intrigante. Acompaña a caballeros y magos en sus hazañas en esta época medieval.",
         image_url: "https://static.rfstat.com/gm-media/template/234/screen/10078/style/10116/4ec88566bf61_1x.jpeg",
         category: ["Historia", "Misterio"],
-        quantity: 55,
-        inStock: 55,
+        quantity: 5,
+        inStock: 5,
         inLoan: 0,
         price: 1999,
         location: "Estante F-7"
@@ -774,16 +785,667 @@ db.inventory.insertMany([
         description: "Embárcate en una emocionante búsqueda del tesoro en 'La Búsqueda del Tesoro Dorado'. Sigue las pistas y descubre antiguos secretos.",
         image_url: "https://static.rfstat.com/gm-media/template/234/screen/10080/style/10118/9f48df880bfd_1x.jpeg",
         category: ["Aventura", "Misterio"],
-        quantity: 50,
-        inStock: 50,
+        quantity: 5,
+        inStock: 5,
         inLoan: 0,
         price: 1799,
         location: "Estante A-2"
     }
-])
+]);
 
 //DATA PRODUCTS
-
+use("inventorySystem")
+db.products.insertMany([
+    {
+        id: 1,
+        serial: "A1",
+        status: "En inventario"
+    },
+    {
+        id: 2,
+        serial: "A1",
+        status: "En inventario"
+    },
+    {
+        id: 3,
+        serial: "A1",
+        status: "En inventario"
+    },
+    {
+        id: 4,
+        serial: "A1",
+        status: "En inventario"
+    },
+    {
+        id: 5,
+        serial: "A1",
+        status: "En inventario"
+    },
+    {
+        id: 6,
+        serial: "B2",
+        status: "En inventario"
+    },
+    {
+        id: 7,
+        serial: "B2",
+        status: "En inventario"
+    },
+    {
+        id: 8,
+        serial: "B2",
+        status: "En inventario"
+    },
+    {
+        id: 9,
+        serial: "B2",
+        status: "En inventario"
+    },
+    {
+        id: 10,
+        serial: "C3",
+        status: "En inventario"
+    },
+    {
+        id: 11,
+        serial: "C3",
+        status: "En inventario"
+    },
+    {
+        id: 12,
+        serial: "C3",
+        status: "En inventario"
+    },
+    {
+        id: 13,
+        serial: "D4",
+        status: "En inventario"
+    },
+    {
+        id: 14,
+        serial: "D4",
+        status: "En inventario"
+    },
+    {
+        id: 15,
+        serial: "D4",
+        status: "En inventario"
+    },
+    {
+        id: 16,
+        serial: "D4",
+        status: "En inventario"
+    },
+    {
+        id: 17,
+        serial: "D4",
+        status: "En inventario"
+    },
+    {
+        id: 18,
+        serial: "E5",
+        status: "En inventario"
+    },
+    {
+        id: 19,
+        serial: "E5",
+        status: "En inventario"
+    },
+    {
+        id: 20,
+        serial: "E5",
+        status: "En inventario"
+    },
+    {
+        id: 21,
+        serial: "E5",
+        status: "En inventario"
+    },
+    {
+        id: 22,
+        serial: "E5",
+        status: "En inventario"
+    },
+    {
+        id: 23,
+        serial: "F6",
+        status: "En inventario"
+    },
+    {
+        id: 24,
+        serial: "F6",
+        status: "En inventario"
+    },
+    {
+        id: 25,
+        serial: "F6",
+        status: "En inventario"
+    },
+    {
+        id: 26,
+        serial: "F6",
+        status: "En inventario"
+    },
+    {
+        id: 27,
+        serial: "F6",
+        status: "En inventario"
+    },
+    {
+        id: 28,
+        serial: "G7",
+        status: "En inventario"
+    },
+    {
+        id: 29,
+        serial: "G7",
+        status: "En inventario"
+    },
+    {
+        id: 30,
+        serial: "G7",
+        status: "En inventario"
+    },
+    {
+        id: 31,
+        serial: "G7",
+        status: "En inventario"
+    },
+    {
+        id: 32,
+        serial: "H8",
+        status: "En inventario"
+    },
+    {
+        id: 33,
+        serial: "H8",
+        status: "En inventario"
+    },
+    {
+        id: 34,
+        serial: "H8",
+        status: "En inventario"
+    },
+    {
+        id: 35,
+        serial: "H8",
+        status: "En inventario"
+    },
+    {
+        id: 36,
+        serial: "H8",
+        status: "En inventario"
+    },
+    {
+        id: 37,
+        serial: "I9",
+        status: "En inventario"
+    },
+    {
+        id: 38,
+        serial: "I9",
+        status: "En inventario"
+    },
+    {
+        id: 39,
+        serial: "I9",
+        status: "En inventario"
+    },
+    {
+        id: 40,
+        serial: "I9",
+        status: "En inventario"
+    },
+    {
+        id: 41,
+        serial: "I9",
+        status: "En inventario"
+    },
+    {
+        id: 42,
+        serial: "J10",
+        status: "En inventario"
+    },
+    {
+        id: 43,
+        serial: "J10",
+        status: "En inventario"
+    },
+    {
+        id: 44,
+        serial: "J10",
+        status: "En inventario"
+    },
+    {
+        id: 45,
+        serial: "J10",
+        status: "En inventario"
+    },
+    {
+        id: 46,
+        serial: "K11",
+        status: "En inventario"
+    },
+    {
+        id: 47,
+        serial: "K11",
+        status: "En inventario"
+    },
+    {
+        id: 48,
+        serial: "K11",
+        status: "En inventario"
+    },
+    {
+        id: 49,
+        serial: "L12",
+        status: "En inventario"
+    },
+    {
+        id: 50,
+        serial: "L12",
+        status: "En inventario"
+    },
+    {
+        id: 51,
+        serial: "L12",
+        status: "En inventario"
+    },
+    {
+        id: 52,
+        serial: "L12",
+        status: "En inventario"
+    },
+    {
+        id: 53,
+        serial: "L12",
+        status: "En inventario"
+    },
+    {
+        id: 54,
+        serial: "M13",
+        status: "En inventario"
+    },
+    {
+        id: 55,
+        serial: "M13",
+        status: "En inventario"
+    },
+    {
+        id: 56,
+        serial: "M13",
+        status: "En inventario"
+    },
+    {
+        id: 57,
+        serial: "N14",
+        status: "En inventario"
+    },
+    {
+        id: 58,
+        serial: "N14",
+        status: "En inventario"
+    },
+    {
+        id: 59,
+        serial: "N14",
+        status: "En inventario"
+    },
+    {
+        id: 60,
+        serial: "N14",
+        status: "En inventario"
+    },
+    {
+        id: 61,
+        serial: "N14",
+        status: "En inventario"
+    },
+    {
+        id: 62,
+        serial: "O15",
+        status: "En inventario"
+    },
+    {
+        id: 63,
+        serial: "O15",
+        status: "En inventario"
+    },
+    {
+        id: 64,
+        serial: "O15",
+        status: "En inventario"
+    },
+    {
+        id: 65,
+        serial: "O15",
+        status: "En inventario"
+    },
+    {
+        id: 66,
+        serial: "P16",
+        status: "En inventario"
+    },
+    {
+        id: 67,
+        serial: "P16",
+        status: "En inventario"
+    },
+    {
+        id: 68,
+        serial: "P16",
+        status: "En inventario"
+    },
+    {
+        id: 69,
+        serial: "Q17",
+        status: "En inventario"
+    },
+    {
+        id: 70,
+        serial: "Q17",
+        status: "En inventario"
+    },
+    {
+        id: 71,
+        serial: "Q17",
+        status: "En inventario"
+    },
+    {
+        id: 72,
+        serial: "Q17",
+        status: "En inventario"
+    },
+    {
+        id: 73,
+        serial: "R18",
+        status: "En inventario"
+    },
+    {
+        id: 74,
+        serial: "R18",
+        status: "En inventario"
+    },
+    {
+        id: 75,
+        serial: "R18",
+        status: "En inventario"
+    },
+    {
+        id: 76,
+        serial: "R18",
+        status: "En inventario"
+    },
+    {
+        id: 77,
+        serial: "R18",
+        status: "En inventario"
+    },
+    {
+        id: 78,
+        serial: "S19",
+        status: "En inventario"
+    },
+    {
+        id: 79,
+        serial: "S19",
+        status: "En inventario"
+    },
+    {
+        id: 80,
+        serial: "S19",
+        status: "En inventario"
+    },
+    {
+        id: 81,
+        serial: "S19",
+        status: "En inventario"
+    },
+    {
+        id: 82,
+        serial: "T20",
+        status: "En inventario"
+    },
+    {
+        id: 83,
+        serial: "T20",
+        status: "En inventario"
+    },
+    {
+        id: 84,
+        serial: "T20",
+        status: "En inventario"
+    },
+    {
+        id: 85,
+        serial: "T20",
+        status: "En inventario"
+    },
+    {
+        id: 86,
+        serial: "T20",
+        status: "En inventario"
+    },
+    {
+        id: 87,
+        serial: "U21",
+        status: "En inventario"
+    },
+    {
+        id: 88,
+        serial: "U21",
+        status: "En inventario"
+    },
+    {
+        id: 89,
+        serial: "U21",
+        status: "En inventario"
+    },
+    {
+        id: 90,
+        serial: "V22",
+        status: "En inventario"
+    },
+    {
+        id: 91,
+        serial: "V22",
+        status: "En inventario"
+    },
+    {
+        id: 92,
+        serial: "V22",
+        status: "En inventario"
+    },
+    {
+        id: 93,
+        serial: "V22",
+        status: "En inventario"
+    },
+    {
+        id: 94,
+        serial: "V22",
+        status: "En inventario"
+    },
+    {
+        id: 95,
+        serial: "W23",
+        status: "En inventario"
+    },
+    {
+        id: 96,
+        serial: "W23",
+        status: "En inventario"
+    },
+    {
+        id: 97,
+        serial: "W23",
+        status: "En inventario"
+    },
+    {
+        id: 98,
+        serial: "W23",
+        status: "En inventario"
+    },
+    {
+        id: 99,
+        serial: "W23",
+        status: "En inventario"
+    },
+    {
+        id: 100,
+        serial: "X24",
+        status: "En inventario"
+    },
+    {
+        id: 101,
+        serial: "X24",
+        status: "En inventario"
+    },
+    {
+        id: 102,
+        serial: "X24",
+        status: "En inventario"
+    },
+    {
+        id: 103,
+        serial: "X24",
+        status: "En inventario"
+    },
+    {
+        id: 104,
+        serial: "X24",
+        status: "En inventario"
+    },
+    {
+        id: 105,
+        serial: "Y25",
+        status: "En inventario"
+    },
+    {
+        id: 106,
+        serial: "Y25",
+        status: "En inventario"
+    },
+    {
+        id: 107,
+        serial: "Y25",
+        status: "En inventario"
+    },
+    {
+        id: 108,
+        serial: "Y25",
+        status: "En inventario"
+    },
+    {
+        id: 109,
+        serial: "Y25",
+        status: "En inventario"
+    },
+    {
+        id: 110,
+        serial: "Z26",
+        status: "En inventario"
+    },
+    {
+        id: 111,
+        serial: "Z26",
+        status: "En inventario"
+    },
+    {
+        id: 112,
+        serial: "Z26",
+        status: "En inventario"
+    },
+    {
+        id: 113,
+        serial: "Z26",
+        status: "En inventario"
+    },
+    {
+        id: 114,
+        serial: "AA27",
+        status: "En inventario"
+    },
+    {
+        id: 115,
+        serial: "AA27",
+        status: "En inventario"
+    },
+    {
+        id: 116,
+        serial: "AA27",
+        status: "En inventario"
+    },
+    {
+        id: 117,
+        serial: "AA27",
+        status: "En inventario"
+    },
+    {
+        id: 118,
+        serial: "BB28",
+        status: "En inventario"
+    },
+    {
+        id: 119,
+        serial: "BB28",
+        status: "En inventario"
+    },
+    {
+        id: 120,
+        serial: "BB28",
+        status: "En inventario"
+    },
+    {
+        id: 121,
+        serial: "BB28",
+        status: "En inventario"
+    },
+    {
+        id: 122,
+        serial: "BB28",
+        status: "En inventario"
+    },
+    {
+        id: 123,
+        serial: "CC29",
+        status: "En inventario"
+    },
+    {
+        id: 124,
+        serial: "CC29",
+        status: "En inventario"
+    },
+    {
+        id: 125,
+        serial: "CC29",
+        status: "En inventario"
+    },
+    {
+        id: 126,
+        serial: "CC29",
+        status: "En inventario"
+    },
+    {
+        id: 127,
+        serial: "DD30",
+        status: "En inventario"
+    },
+    {
+        id: 128,
+        serial: "DD30",
+        status: "En inventario"
+    },
+    {
+        id: 129,
+        serial: "DD30",
+        status: "En inventario"
+    },
+    {
+        id: 130,
+        serial: "DD30",
+        status: "En inventario" 
+    }]);
 
 
 
@@ -791,7 +1453,10 @@ db.inventory.insertMany([
 db.reservations.insertMany([
     {
         id: 1,
-        products: [1,3],
+        products: [
+            { serialGroup: "A1", cantidad_reserva: 1 },
+            { serialGroup: "C3", cantidad_reserva: 1 }
+        ],
         dni: "123456789A",
         customerName: "Juan Pérez",
         date: "2023/09/25/10:00 AM",
@@ -799,7 +1464,10 @@ db.reservations.insertMany([
     },
     {
         id: 2,
-        products: [2,1],
+        products: [
+            { serialGroup: "A1", cantidad_reserva: 1 },
+            { serialGroup: "B2", cantidad_reserva: 1 }
+        ],
         dni: "456789123C",
         customerName: "Ana García",
         date: "2023-09-26T14:30:00Z",
@@ -807,7 +1475,10 @@ db.reservations.insertMany([
     },
     {
         id: 3,
-        products: [3,5],
+        products: [
+            { serialGroup: "A1", cantidad_reserva: 1 },
+            { serialGroup: "E5", cantidad_reserva: 1 }
+        ],
         dni: "123456789A",
         customerName: "Luis Rodríguez",
         date: "2023-09-27T11:15:00Z",
@@ -815,7 +1486,10 @@ db.reservations.insertMany([
     },
     {
         id: 4,
-        products: [3,5],
+        products: [
+            { serialGroup: "A1", cantidad_reserva: 1 },
+            { serialGroup: "E5", cantidad_reserva: 1 }
+        ],
         dni: "456789123C",
         customerName: "María López",
         date: "2023-09-28T16:45:00Z",
@@ -823,7 +1497,10 @@ db.reservations.insertMany([
     },
     {
         id: 5,
-        products: [3,5],
+        products: [
+            { serialGroup: "A1", cantidad_reserva: 1 },
+            { serialGroup: "E5", cantidad_reserva: 1 }
+        ],
         dni: "123456789A",
         customerName: "Carlos Martínez",
         date: "2023-09-29T09:30:00Z",
@@ -831,7 +1508,10 @@ db.reservations.insertMany([
     },
     {
         id: 6,
-        products: [3,5],
+        products: [
+            { serialGroup: "B2", cantidad_reserva: 1 },
+            { serialGroup: "F6", cantidad_reserva: 1 }
+        ],
         dni: "456789123C",
         customerName: "Sofía Fernández",
         date: "2023-09-30T15:00:00Z",
@@ -839,7 +1519,10 @@ db.reservations.insertMany([
     },
     {
         id: 7,
-        products: [3,5],
+        products: [
+            { serialGroup: "G7", cantidad_reserva: 1 },
+            { serialGroup: "H8", cantidad_reserva: 1 }
+        ],
         dni: "987654321B",
         customerName: "Eduardo González",
         date: "2023-10-01T13:45:00Z",
@@ -847,7 +1530,10 @@ db.reservations.insertMany([
     },
     {
         id: 8,
-        products: [3,5],
+        products: [
+            { serialGroup: "H8", cantidad_reserva: 1 },
+            { serialGroup: "I9", cantidad_reserva: 1 }
+        ],
         dni: "987654321B",
         customerName: "Laura Silva",
         date: "2023-10-02T17:30:00Z",
@@ -855,7 +1541,10 @@ db.reservations.insertMany([
     },
     {
         id: 9,
-        products: [3,5],
+        products: [
+            { serialGroup: "I9", cantidad_reserva: 1 },
+            { serialGroup: "J10", cantidad_reserva: 1 }
+        ],
         dni: "456789123C",
         customerName: "Javier Pérez",
         date: "2023-10-03T12:00:00Z",
@@ -863,7 +1552,10 @@ db.reservations.insertMany([
     },
     {
         id: 10,
-        products: [3,5],
+        products: [
+            { serialGroup: "J10", cantidad_reserva: 1 },
+            { serialGroup: "K11", cantidad_reserva: 1 }
+        ],
         dni: "987654321B",
         customerName: "Patricia Sánchez",
         date: "2023-10-04T14:00:00Z",
@@ -871,61 +1563,147 @@ db.reservations.insertMany([
     }
 ]);
 
+
 //DATA LOANS
 //use("inventorySystem")
 db.loans.insertMany([
     {
-        
         id: 1,
-        productId: 1,
+        products: [{ id_product: 1 }],
         dni: "987654321B",
         customerName: "Juan Pérez",
-        date: new Date("2023-09-25T10:00:00Z"),
-        returnDate: new Date("2023-10-02T10:00:00Z"),
-        quantity: 2
+        date: "2023-09-25T10:00:00Z",
+        returnDate: "2023-10-02T10:00:00Z",
+        status: "En préstamo"
     },
     {
-        
         id: 2,
-        productId: 2,
+        products: [{ id_product: 2 }],
         dni: "123456789A",
         customerName: "Ana García",
-        date: new Date("2023-09-26T14:30:00Z"),
-        returnDate: new Date("2023-10-03T14:30:00Z"),
-        quantity: 1
+        date: "2023-09-26T14:30:00Z",
+        returnDate: "2023-10-03T14:30:00Z",
+        status: "En préstamo"
     },
     {
-        
         id: 3,
-        productId: 3,
+        products: [{ id_product: 3 }],
         dni: "987654321B",
         customerName: "Luis Rodríguez",
-        date: new Date("2023-09-27T11:15:00Z"),
-        returnDate: new Date("2023-10-04T11:15:00Z"),
-        quantity: 3
+        date: "2023-09-27T11:15:00Z",
+        returnDate: "2023-10-04T11:15:00Z",
+        status: "En préstamo"
     },
     {
-        
         id: 4,
-        productId: 4,
+        products: [{ id_product: 4 }],
         dni: "456789123C",
         customerName: "María López",
-        date: new Date("2023-09-28T16:45:00Z"),
-        returnDate: new Date("2023-10-05T16:45:00Z"),
-        quantity: 1
+        date: "2023-09-28T16:45:00Z",
+        returnDate: "2023-10-05T16:45:00Z",
+        status: "En préstamo"
     },
     {
-        
         id: 5,
-        productId: 5,
+        products: [{ id_product: 5 }],
         dni: "123456789A",
         customerName: "Carlos Martínez",
-        date: new Date("2023-09-29T09:30:00Z"),
-        returnDate: new Date("2023-10-06T09:30:00Z"),
-        quantity: 2
+        date: "2023-09-29T09:30:00Z",
+        returnDate: "2023-10-06T09:30:00Z",
+        status: "En préstamo"
+    },
+    {
+        id: 6,
+        products: [{ id_product: 6 }],
+        dni: "789123456D",
+        customerName: "Sofía Fernández",
+        date: "2023-10-01T13:45:00Z",
+        returnDate: "2023-10-08T13:45:00Z",
+        status: "En préstamo"
+    },
+    {
+        id: 7,
+        products: [{ id_product: 7 }],
+        dni: "456789123C",
+        customerName: "Eduardo González",
+        date: "2023-10-02T17:30:00Z",
+        returnDate: "2023-10-09T17:30:00Z",
+        status: "En préstamo"
+    },
+    {
+        id: 8,
+        products: [{ id_product: 8 }],
+        dni: "456789123C",
+        customerName: "Laura Silva",
+        date: "2023-10-03T12:00:00Z",
+        returnDate: "2023-10-10T12:00:00Z",
+        status: "En préstamo"
+    },
+    {
+        id: 9,
+        products: [{ id_product: 9 }],
+        dni: "456789123C",
+        customerName: "Javier Pérez",
+        date: "2023-10-04T14:00:00Z",
+        returnDate: "2023-10-11T14:00:00Z",
+        status: "En préstamo"
+    },
+    {
+        id: 10,
+        products: [{ id_product: 10 }],
+        dni: "987654321B",
+        customerName: "Patricia Sánchez",
+        date: "2023-10-05T09:00:00Z",
+        returnDate: "2023-10-12T09:00:00Z",
+        status: "En préstamo"
+    },
+    {
+        id: 11,
+        products: [{ id_product: 11 }],
+        dni: "123456789A",
+        customerName: "Roberto González",
+        date: "2023-10-06T16:30:00Z",
+        returnDate: "2023-10-13T16:30:00Z",
+        status: "En préstamo"
+    },
+    {
+        id: 12,
+        products: [{ id_product: 12 }],
+        dni: "123456789A",
+        customerName: "Laura Pérez",
+        date: "2023-10-07T11:45:00Z",
+        returnDate: "2023-10-14T11:45:00Z",
+        status: "En préstamo"
+    },
+    {
+        id: 13,
+        products: [{ id_product: 13 }],
+        dni: "789123456D",
+        customerName: "María Rodríguez",
+        date: "2023-10-08T15:15:00Z",
+        returnDate: "2023-10-15T15:15:00Z",
+        status: "En préstamo"
+    },
+    {
+        id: 14,
+        products: [{ id_product: 14 }],
+        dni: "987654321B",
+        customerName: "Pedro García",
+        date: "2023-10-09T10:30:00Z",
+        returnDate: "2023-10-16T10:30:00Z",
+        status: "En préstamo"
+    },
+    {
+        id: 15,
+        products: [{ id_product: 15 }],
+        dni: "789123456D",
+        customerName: "Luisa Martínez",
+        date: "2023-10-10T12:30:00Z",
+        returnDate: "2023-10-17T12:30:00Z",
+        status: "En préstamo"
     }
-    
 ]);
+
 
 
 
