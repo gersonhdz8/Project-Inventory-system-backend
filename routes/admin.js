@@ -15,17 +15,7 @@ router.get("/getAllReservations",ReserveController.getAllReserve)
 router.patch("/statusReserve/:reserveId/:status",ReserveController.statusReserve)
 router.post("/createLoan",LoanController.createLoan)
 router.patch("/statusLoan/:loanId/:status",LoanController.statusLoan)
-router.get("/getAllClients",ClientController.getAllUserClients)
-
-router
-
-
-//router.get("/getAdmin/:id",AdminController.getAdmin)
-//router.get("/getAllAdmin",AdminController.getAllAdmin)
-//router.put("/update/:id", AdminController.updateAdmin)
-//router.delete("/delete/:id", AdminController.deleteAdmin)
-
-
+router.get("/getAllUserClients",ClientController.getAllUserClients)
 
 export default router
 

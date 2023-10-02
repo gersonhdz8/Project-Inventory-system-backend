@@ -6,11 +6,8 @@ const router = Router()
 
 
 router.patch("/rolUser/:userId/:role",SuperadminController.updateUserRole)
+router.get("/getAllUsers",AdminController.getAllUsers)
 router.get("/getAllAdmin",AdminController.getAllAdmin)
 
-
-router.get("/getAdmin/:dni",SuperadminController.getSuperadmin)
-router.put("/update/:dni", SuperadminController.updateSuperadmin)
-router.delete("/delete/:dni", SuperadminController.deleteSuperadmin)
 
 export default router

@@ -9,11 +9,12 @@ export default async function insertWithTransaction(data,collection) {
 
         const model={
             "users": "usersID",
-            "products":"productsID",            
+            "products":"productsID",
+            "inventory": "inventoryID",            
             "reservations":"reservationsID",
             "loans":"loansID"
-        }
-        const collectionID= model[collection]        
+        }        
+        const collectionID= model[collection]                
         const session = conexion.startSession();
 
         try {
@@ -30,12 +31,24 @@ export default async function insertWithTransaction(data,collection) {
             if(collection == "reservations")
             {
                 data.status= "Pendiente"
-            } 
-                    
+            }
+            if(collection == "users")
+            {
+                data.role= "client"
+            }
+            if(collection == "loans")
+            {
+                data.status= "En préstamo"
+            }
+            if(collection == "products")
+            {
+                data.status= "En inventario"
+            }
+            
             const modelCollection = conexion.db().collection(collection);
             const idObject= await modelCollection.insertOne(data,{ session });
             await session.commitTransaction();
-            return{idObject,message:"Creación Exitosa"}
+            return{message:"Creación Exitosa",data}
         }
         catch (error)
         {

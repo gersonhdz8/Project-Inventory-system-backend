@@ -1,28 +1,156 @@
+###------------REGISTER-------------------------------------
+POST  http://127.0.0.10:3010/auth/users/register
+Content-Type: application/json
+
+{
+    "name": "Gerson",
+    "last_name": "Hernández Olave",
+    "email": "gerson@example.com",
+    "username": "gersonhdz",
+    "password": "gerson123",
+    "dni": "1096248657"       
+}
+
+###
+POST  http://127.0.0.10:3010/auth/users/register
+Content-Type: application/json
+
+{
+    "name": "Gerson",
+    "last_name": "Hernández Olave",
+    "email": "gersonhdz@example.com",
+    "username": "gersonhdz8",
+    "password": "gerson1234",
+    "dni": "10962486579"       
+}
+
+###
+POST  http://127.0.0.10:3010/auth/users/register
+Content-Type: application/json
+
+{
+    "name": "Gerson",
+    "last_name": "Hernández Olave",
+    "email": "gersonhdz00@example.com",
+    "username": "gersonhdz00",
+    "password": "gerson12345",
+    "dni": "10962486578"       
+}
+###------------LOGIN-----------------------------------------
+#client
+POST  http://127.0.0.10:3010/auth/users/login
+Content-Type: application/json
+
+{
+    "username": "gersonhdz",
+    "password": "gerson123"
+}
+
+###admin
+POST  http://127.0.0.10:3010/auth/users/login
+Content-Type: application/json
+
+{
+    "username": "gersonhdz8",
+    "password": "gerson1234"
+}
+
+
+###superadmin
+POST  http://127.0.0.10:3010/auth/users/login
+Content-Type: application/json
+
+{
+    "username": "gersonhdz00",
+    "password": "gerson12345"
+}
+
+###-----------------SUPERADMIN-------------------------
+### Buscar todos los usuarios clientes
+GET http://127.0.0.10:3010/aplication/admin/getAllUserClients
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTFhMDllODMzNWQwMTU1NDliNjE5NDciLCJuYW1lIjoiR2Vyc29uIiwibGFzdF9uYW1lIjoiSGVybsOhbmRleiBPbGF2ZSIsImVtYWlsIjoiZ2Vyc29uaGR6MDBAZXhhbXBsZS5jb20iLCJ1c2VybmFtZSI6ImdlcnNvbmhkejAwIiwicGFzc3dvcmQiOiIkMmIkMTAkWExid0lVWG9USkZCd0lXUFoybWJwdUpJNVFGUXM1ejIyMWNUL0NkTUFCVUtZSDV1UURuOUsiLCJkbmkiOiIxMDk2MjQ4NjU3OCIsImlkIjo5LCJyb2xlIjoic3VwZXJhZG1pbiIsImlhdCI6MTY5NjIwNTg3NiwiZXhwIjoxNjk2MjA5NDc2fQ.uDgE2nCHJBA3Ew4Av2FmsafqaaJReWVs4cS_hpyZEac
+
+### OBTENER TODOS LOS USUARIOS
+GET http://127.0.0.10:3010/aplication/superadmin/getAllUsers
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTFhMDllODMzNWQwMTU1NDliNjE5NDciLCJuYW1lIjoiR2Vyc29uIiwibGFzdF9uYW1lIjoiSGVybsOhbmRleiBPbGF2ZSIsImVtYWlsIjoiZ2Vyc29uaGR6MDBAZXhhbXBsZS5jb20iLCJ1c2VybmFtZSI6ImdlcnNvbmhkejAwIiwicGFzc3dvcmQiOiIkMmIkMTAkWExid0lVWG9USkZCd0lXUFoybWJwdUpJNVFGUXM1ejIyMWNUL0NkTUFCVUtZSDV1UURuOUsiLCJkbmkiOiIxMDk2MjQ4NjU3OCIsImlkIjo5LCJyb2xlIjoic3VwZXJhZG1pbiIsImlhdCI6MTY5NjIwNTg3NiwiZXhwIjoxNjk2MjA5NDc2fQ.uDgE2nCHJBA3Ew4Av2FmsafqaaJReWVs4cS_hpyZEac
+
+### CAMBIAR ROL DE USUARIO
+PATCH  http://127.0.0.10:3010/aplication/superadmin/rolUser/1/admin
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTFhMDllODMzNWQwMTU1NDliNjE5NDciLCJuYW1lIjoiR2Vyc29uIiwibGFzdF9uYW1lIjoiSGVybsOhbmRleiBPbGF2ZSIsImVtYWlsIjoiZ2Vyc29uaGR6MDBAZXhhbXBsZS5jb20iLCJ1c2VybmFtZSI6ImdlcnNvbmhkejAwIiwicGFzc3dvcmQiOiIkMmIkMTAkWExid0lVWG9USkZCd0lXUFoybWJwdUpJNVFGUXM1ejIyMWNUL0NkTUFCVUtZSDV1UURuOUsiLCJkbmkiOiIxMDk2MjQ4NjU3OCIsImlkIjo5LCJyb2xlIjoic3VwZXJhZG1pbiIsImlhdCI6MTY5NjIwNTg3NiwiZXhwIjoxNjk2MjA5NDc2fQ.uDgE2nCHJBA3Ew4Av2FmsafqaaJReWVs4cS_hpyZEac
 ###-------------------- CLIENTES---------------------
 
 ###Todos los productos
-GET http://127.0.0.10:3010/aplication/client/getAllProducts
+GET http://127.0.0.10:3010/aplication/client/getAllInventories
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTE4ZWQ5NTQzNGQwOTRjZDE5ZmIzN2MiLCJuYW1lIjoiR2Vyc29uIiwibGFzdF9uYW1lIjoiSGVybsOhbmRleiBPbGF2ZSIsImVtYWlsIjoiZ2Vyc29uQGV4YW1wbGUuY29tIiwidXNlcm5hbWUiOiJnZXJzb25oZHoiLCJwYXNzd29yZCI6IiQyYiQxMCR2RU9SY1JlTjVXOU9qRkVVdGNENFBPWkVrLzNHTWNSZ09qUVFFVFhoQW5QdGRKdFZQejZLLiIsImRuaSI6IjEwOTYyNDg2NTciLCJpZCI6Nywicm9sZSI6ImNsaWVudCIsImlhdCI6MTY5NjIwMDkzNSwiZXhwIjoxNjk2MjA0NTM1fQ.wFAYADpEysm5xVi9i77LMWxAEiSPPLBxyAZRaRFjimE
 
-###Producto por categoria
-GET http://127.0.0.10:3010/aplication/client/getProductCategory/Misterio
+###Inventario por categoria
+GET http://127.0.0.10:3010/aplication/client/getInventoryCategory/Misterio
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTE4ZWQ5NTQzNGQwOTRjZDE5ZmIzN2MiLCJuYW1lIjoiR2Vyc29uIiwibGFzdF9uYW1lIjoiSGVybsOhbmRleiBPbGF2ZSIsImVtYWlsIjoiZ2Vyc29uQGV4YW1wbGUuY29tIiwidXNlcm5hbWUiOiJnZXJzb25oZHoiLCJwYXNzd29yZCI6IiQyYiQxMCR2RU9SY1JlTjVXOU9qRkVVdGNENFBPWkVrLzNHTWNSZ09qUVFFVFhoQW5QdGRKdFZQejZLLiIsImRuaSI6IjEwOTYyNDg2NTciLCJpZCI6Nywicm9sZSI6ImNsaWVudCIsImlhdCI6MTY5NjIwMDg0MCwiZXhwIjoxNjk2MjA0NDQwfQ.TbE6QBnl_tEDhQDzeCuNdpGkQylphQH3ShJvk9MSnqU
+
+###Detalles de las reservas por dni de usuario
+GET http://127.0.0.10:3010/aplication/client/reserveDetails/456789123C
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTE4ZWQ5NTQzNGQwOTRjZDE5ZmIzN2MiLCJuYW1lIjoiR2Vyc29uIiwibGFzdF9uYW1lIjoiSGVybsOhbmRleiBPbGF2ZSIsImVtYWlsIjoiZ2Vyc29uQGV4YW1wbGUuY29tIiwidXNlcm5hbWUiOiJnZXJzb25oZHoiLCJwYXNzd29yZCI6IiQyYiQxMCR2RU9SY1JlTjVXOU9qRkVVdGNENFBPWkVrLzNHTWNSZ09qUVFFVFhoQW5QdGRKdFZQejZLLiIsImRuaSI6IjEwOTYyNDg2NTciLCJpZCI6Nywicm9sZSI6ImNsaWVudCIsImlhdCI6MTY5NjIwMDg0MCwiZXhwIjoxNjk2MjA0NDQwfQ.TbE6QBnl_tEDhQDzeCuNdpGkQylphQH3ShJvk9MSnqU
 
 ###Crear reserva
 POST  http://127.0.0.10:3010/aplication/client/newReserve
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTE4ZWQ5NTQzNGQwOTRjZDE5ZmIzN2MiLCJuYW1lIjoiR2Vyc29uIiwibGFzdF9uYW1lIjoiSGVybsOhbmRleiBPbGF2ZSIsImVtYWlsIjoiZ2Vyc29uQGV4YW1wbGUuY29tIiwidXNlcm5hbWUiOiJnZXJzb25oZHoiLCJwYXNzd29yZCI6IiQyYiQxMCR2RU9SY1JlTjVXOU9qRkVVdGNENFBPWkVrLzNHTWNSZ09qUVFFVFhoQW5QdGRKdFZQejZLLiIsImRuaSI6IjEwOTYyNDg2NTciLCJpZCI6Nywicm9sZSI6ImNsaWVudCIsImlhdCI6MTY5NjIwMDg0MCwiZXhwIjoxNjk2MjA0NDQwfQ.TbE6QBnl_tEDhQDzeCuNdpGkQylphQH3ShJvk9MSnqU
 
 {
-    "products": [1,3],
-    "dni": "123456789Ah",
-    "customerName": "Juan Pérezm",
-    "date": "2023-09-25T10:00:00Z" 
+    "products": [
+        { "serialGroup": "A1", "cantidad_reserva": 1 },
+        { "serialGroup": "B2", "cantidad_reserva": 1 }
+    ],
+    "dni": "456789123C",
+    "customerName": "Gerson",
+    "date": "2023-09-26T14:30:00Z"    
 }
 
-###Detalles de reserva por usuario
-GET  http://127.0.0.10:3010/aplication/client/reserveDetails/123456789A
-Content-Type: application/json
-
 ###Cancelar una reserva
-PATCH   http://127.0.0.10:3010/aplication/client/canceledReserve/4
+PATCH   http://127.0.0.10:3010/aplication/client/canceledReserve/14
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTE4ZWQ5NTQzNGQwOTRjZDE5ZmIzN2MiLCJuYW1lIjoiR2Vyc29uIiwibGFzdF9uYW1lIjoiSGVybsOhbmRleiBPbGF2ZSIsImVtYWlsIjoiZ2Vyc29uQGV4YW1wbGUuY29tIiwidXNlcm5hbWUiOiJnZXJzb25oZHoiLCJwYXNzd29yZCI6IiQyYiQxMCR2RU9SY1JlTjVXOU9qRkVVdGNENFBPWkVrLzNHTWNSZ09qUVFFVFhoQW5QdGRKdFZQejZLLiIsImRuaSI6IjEwOTYyNDg2NTciLCJpZCI6Nywicm9sZSI6ImNsaWVudCIsImlhdCI6MTY5NjIwMDg0MCwiZXhwIjoxNjk2MjA0NDQwfQ.TbE6QBnl_tEDhQDzeCuNdpGkQylphQH3ShJvk9MSnqU
+
+###--------ADMIN-------------------------------
+
+##Buscar todos los productos
+GET http://127.0.0.10:3010/aplication/admin/getAllProducts
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTE4ZWQ5NTQzNGQwOTRjZDE5ZmIzN2MiLCJuYW1lIjoiR2Vyc29uIiwibGFzdF9uYW1lIjoiSGVybsOhbmRleiBPbGF2ZSIsImVtYWlsIjoiZ2Vyc29uQGV4YW1wbGUuY29tIiwidXNlcm5hbWUiOiJnZXJzb25oZHoiLCJwYXNzd29yZCI6IiQyYiQxMCR2RU9SY1JlTjVXOU9qRkVVdGNENFBPWkVrLzNHTWNSZ09qUVFFVFhoQW5QdGRKdFZQejZLLiIsImRuaSI6IjEwOTYyNDg2NTciLCJpZCI6Nywicm9sZSI6ImNsaWVudCIsImlhdCI6MTY5NjIwMDg0MCwiZXhwIjoxNjk2MjA0NDQwfQ.TbE6QBnl_tEDhQDzeCuNdpGkQylphQH3ShJvk9MSnqU
+
+###Buscar todas las reservas
+GET http://127.0.0.10:3010/aplication/admin/getAllReservations
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTE4ZWQ5NTQzNGQwOTRjZDE5ZmIzN2MiLCJuYW1lIjoiR2Vyc29uIiwibGFzdF9uYW1lIjoiSGVybsOhbmRleiBPbGF2ZSIsImVtYWlsIjoiZ2Vyc29uQGV4YW1wbGUuY29tIiwidXNlcm5hbWUiOiJnZXJzb25oZHoiLCJwYXNzd29yZCI6IiQyYiQxMCR2RU9SY1JlTjVXOU9qRkVVdGNENFBPWkVrLzNHTWNSZ09qUVFFVFhoQW5QdGRKdFZQejZLLiIsImRuaSI6IjEwOTYyNDg2NTciLCJpZCI6Nywicm9sZSI6ImNsaWVudCIsImlhdCI6MTY5NjIwMDg0MCwiZXhwIjoxNjk2MjA0NDQwfQ.TbE6QBnl_tEDhQDzeCuNdpGkQylphQH3ShJvk9MSnqU
+
+
+### Buscar todos los usuarios clientes
+GET http://127.0.0.10:3010/aplication/admin/getAllUserClients
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTE4ZWQ5NTQzNGQwOTRjZDE5ZmIzN2MiLCJuYW1lIjoiR2Vyc29uIiwibGFzdF9uYW1lIjoiSGVybsOhbmRleiBPbGF2ZSIsImVtYWlsIjoiZ2Vyc29uQGV4YW1wbGUuY29tIiwidXNlcm5hbWUiOiJnZXJzb25oZHoiLCJwYXNzd29yZCI6IiQyYiQxMCR2RU9SY1JlTjVXOU9qRkVVdGNENFBPWkVrLzNHTWNSZ09qUVFFVFhoQW5QdGRKdFZQejZLLiIsImRuaSI6IjEwOTYyNDg2NTciLCJpZCI6Nywicm9sZSI6ImNsaWVudCIsImlhdCI6MTY5NjIwMDg0MCwiZXhwIjoxNjk2MjA0NDQwfQ.TbE6QBnl_tEDhQDzeCuNdpGkQylphQH3ShJvk9MSnqU
+
+
+### Crear producto
+POST http://127.0.0.10:3010/aplication/admin/newProduct
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTE4ZWQ5NTQzNGQwOTRjZDE5ZmIzN2MiLCJuYW1lIjoiR2Vyc29uIiwibGFzdF9uYW1lIjoiSGVybsOhbmRleiBPbGF2ZSIsImVtYWlsIjoiZ2Vyc29uQGV4YW1wbGUuY29tIiwidXNlcm5hbWUiOiJnZXJzb25oZHoiLCJwYXNzd29yZCI6IiQyYiQxMCR2RU9SY1JlTjVXOU9qRkVVdGNENFBPWkVrLzNHTWNSZ09qUVFFVFhoQW5QdGRKdFZQejZLLiIsImRuaSI6IjEwOTYyNDg2NTciLCJpZCI6Nywicm9sZSI6ImNsaWVudCIsImlhdCI6MTY5NjIwMDg0MCwiZXhwIjoxNjk2MjA0NDQwfQ.TbE6QBnl_tEDhQDzeCuNdpGkQylphQH3ShJvk9MSnqU
+
+{
+    "serial": "A1",
+}
+
+router.post("/newProduct",ProductController.createProduct)
+
+router.patch("/updateProduct/:id",ProductController.updateProduct)
+router.delete("/deleteProduct/:id",ProductController.deleteProduct)
+
+router.patch("/statusReserve/:reserveId/:status",ReserveController.statusReserve)
+router.post("/createLoan",LoanController.createLoan)
+router.patch("/statusLoan/:loanId/:status",LoanController.statusLoan)
+

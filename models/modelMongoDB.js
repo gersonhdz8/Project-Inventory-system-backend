@@ -2,11 +2,14 @@ import connect from "../config/mongoDB.js";
 import dotenv from "dotenv"
 import { ObjectId } from "mongodb";
 import insertWithTransaction from "../helpers/transaction.js";
+import { createToken, validateToken } from "../middlewares/jwt.js";
+import bcrypt from "bcrypt";
 
 dotenv.config("../")
 
 const conexion = (await connect()).db(process.env.ATLAS_DB)
 const usersCollection = conexion.collection("users")
+const inventoryCollection = conexion.collection("inventory")
 const productsCollection = conexion.collection("products")
 const reservationsCollection = conexion.collection("reservations")
 const loansCollection = conexion.collection("loans")
@@ -300,10 +303,10 @@ export default class Model{
                 if(product.acknowledged && product.matchedCount>0)
                 {
                     console.log("Datos actualizados correctamente");
-                    return {status:400, message:"Datos actualizados correctamente." }
+                    return {status:400, message:"Datos actualizados correctamente."}
                 }
                 else{
-                    return {status:400, message:"No fue posible actualizar datos." } 
+                    return {status:400, message:"No fue posible actualizar datos."} 
                 }
             //return product
 
@@ -320,7 +323,7 @@ export default class Model{
             if(product.acknowledged && product.deletedCount>0)
             {
                 //console.log("Producto eliminado correctamente");
-                return  {status:400, message: "Producto eliminado Correctamente"} 
+                return  {status:400, message: "Producto eliminado Correctamente."} 
             }
             return product
             
@@ -358,11 +361,11 @@ export default class Model{
         }
     }
     //Cambiar el estado de un prestamo (En préstamo,Devuelto,Retraso en devolución)
-    static async statusReserve(loanId,status){
+    static async statusLoan(loanId,status){
         try {
 
-            const reserve= await reservationsCollection.updateOne({_id: ObjectId(loanId)},{$set:{status: status}})
-            return reserve
+            const loan= await loansCollection.updateOne({_id: ObjectId(loanId)},{$set:{status: status}})
+            return loan
 
         } catch (error) {
             return Promise.reject(error)
@@ -370,15 +373,136 @@ export default class Model{
     } 
 
     //Cambiar el rol de usuario
-    static async updateUserRole(userId,status){
+    static async updateUserRole(userId,role){
         try {
 
-            const reserve= await reservationsCollection.updateOne({_id: userId},{$set:{status: status}})
-            return reserve
+            const usuario= await usersCollection.updateOne({id:userId},{$set:{role: role}})
+            return usuario
 
         } catch (error) {
             return Promise.reject(error)
         }
     } 
 
+    //Registrar usuario
+    static async userRegister(user){
+        try {
+
+            return await insertWithTransaction(user, "users")
+
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+
+    //Login usuario
+    static async userLogin(username,password){
+        try {
+
+            const user = await usersCollection.findOne({username: username})
+            const passwordCorrect= user === null ? false : await bcrypt.compare(password, user.password)
+            if(!passwordCorrect)
+            {
+                return {status:400, message: "Usuario o contraseña incorrecta."} 
+            }
+            const token = await createToken(user, process.env.SECRET_KEY)            
+            return {status:200, infoUser:user, token:token , message:"Login sucess"}
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+
+    static async getInventoryBySerial(serial){
+        try {
+
+            const inventory = await inventoryCollection.find({serialGroup:serial}).toArray()
+            if(!inventory)
+            {
+                return {status:400, message:"No se encontró ningún inventario con este serial."}
+            }
+            else{
+                return inventory
+            }
+            
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+
+    static async getAllInventories(req,res,next){
+        try {
+
+            const inventory = await inventoryCollection.find().toArray()
+            if(!inventory)
+            {
+                return {status:400, message:"No se encontró ningún inventario."}
+            }
+            else{
+                return inventory
+            }
+            
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+    static async getInventoryByCategory(category){
+        try {
+
+            const inventory = await inventoryCollection.find({category:category}).toArray()
+            if(!inventory)
+            {
+                return {status:400, message:"No se encontró ningún inventario con esta categoria."}
+            }
+            else{
+                return inventory
+            }
+            
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+    static async createInventory(inventory){
+
+        try {
+
+            return await insertWithTransaction(inventory, "inventory")
+
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+    static async deleteInventory(serial){
+
+        try {
+
+            const inventory= await inventoryCollection.deleteOne({serialGroup:serial});
+            if(inventory.acknowledged && inventory.deletedCount>0)
+            {
+                return  {status:400, message: "Inventario eliminado Correctamente"} 
+            }
+            return inventory
+            
+
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
+    static async updateInventory(serial, dataInventory){
+
+        try {
+
+            const inventory = await inventoryCollection.updateOne({serialGroup:serial},{$set:dataInventory});
+                if(inventory.acknowledged && inventory.matchedCount>0)
+                {
+                    console.log("Datos actualizados correctamente");
+                    return {status:400, message:"Datos actualizados correctamente." }
+                }
+                else{
+                    return {status:400, message:"No fue posible actualizar datos." } 
+                }            
+
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
 }

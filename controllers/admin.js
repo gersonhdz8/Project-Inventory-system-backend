@@ -18,6 +18,14 @@ export default class AdminController{
         } catch (error) {
             next(error); 
         }
+    } 
+    static async getAllUsers(req,res,next){
+        try {
+            const admin = await Model.getAllUsers()            
+            res.status(200).json(admin);
+        } catch (error) {
+            next(error); 
+        }
     }   
     static async deleteAdmin(req,res,next){
 

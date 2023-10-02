@@ -1,12 +1,11 @@
 import {Router} from "express";
-import ClientController from "../controllers/client.js"
-import ProductController from "../controllers/product.js"
+import InventoryController from "../controllers/inventory.js"
 import ReserveController from "../controllers/reserve.js"
 
 const router = Router()
 
-router.get("/getAllProducts",ProductController.getAllProducts)
-router.get("/getProductCategory/:category",ProductController.getProductByCategory)
+router.get("/getAllInventories",InventoryController.getAllInventories)
+router.get("/getInventoryCategory/:category",InventoryController.getInventoryByCategory)
 router.get("/reserveDetails/:dni",ReserveController.getReserveDetails)
 router.post("/newReserve",ReserveController.createReserve)
 router.patch("/canceledReserve/:reserveId",ReserveController.canceledReserve)
