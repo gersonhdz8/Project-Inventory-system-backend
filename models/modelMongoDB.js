@@ -33,6 +33,23 @@ export default class Model{
             return Promise.reject(error)
         }
     }
+    //Buscar todos los prestamos
+    static async getAllLoans(){
+        try {
+
+            const loan = await loansCollection.find().toArray()
+            if(!loan)
+            {
+                return {status:400, message:"No se encontró ningún préstamo."}
+            }
+            else{
+                return loan
+            }
+            
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    }
     //Buscar todos los usuarios que sean clientes
     static async getAllUserClients(){
         try {
@@ -267,8 +284,14 @@ export default class Model{
         try {
 
             const reserve= await reservationsCollection.updateOne({id:reserveId},{$set:{status: "Cancelada"}})
-            return reserve
-
+            if(reserve.acknowledged && reserve.matchedCount>0)
+                {
+                    //console.log("Datos actualizados correctamente");
+                    return {status:400, message:"Reserva cancelada correctamente."}
+                }
+                else{
+                    return {status:400, message:"No fue posible cancelar la reserva."} 
+                }            
         } catch (error) {
             return Promise.reject(error)
         }
@@ -277,8 +300,16 @@ export default class Model{
     static async statusReserve(reserveId,status){
         try {
 
-            const reserve= await reservationsCollection.updateOne({_id: ObjectId(reserveId)},{$set:{status: status}})
-            return reserve
+            const reserve= await reservationsCollection.updateOne({id:reserveId},{$set:{status: status}})
+            if(reserve.acknowledged && reserve.matchedCount>0)
+                {
+                    //console.log("Datos actualizados correctamente");
+                    return {status:400, message:"Estado de reserva actualizado correctamente."}
+                }
+                else{
+                    return {status:400, message:"No fue posible actualizar el estado de la reserva."} 
+                }             
+            
 
         } catch (error) {
             return Promise.reject(error)
@@ -364,8 +395,15 @@ export default class Model{
     static async statusLoan(loanId,status){
         try {
 
-            const loan= await loansCollection.updateOne({_id: ObjectId(loanId)},{$set:{status: status}})
-            return loan
+            const loan= await loansCollection.updateOne({id:loanId},{$set:{status: status}})
+            if(loan.acknowledged && loan.matchedCount>0)
+                {
+                    //console.log("Datos actualizados correctamente");
+                    return {status:400, message:"Estado de préstamo actualizado correctamente."}
+                }
+                else{
+                    return {status:400, message:"No fue posible cambiar el estado del préstamo."} 
+                }            
 
         } catch (error) {
             return Promise.reject(error)
@@ -377,7 +415,14 @@ export default class Model{
         try {
 
             const usuario= await usersCollection.updateOne({id:userId},{$set:{role: role}})
-            return usuario
+            if(usuario.acknowledged && usuario.matchedCount>0)
+                {
+                    //console.log("Datos actualizados correctamente");
+                    return {status:400, message:"Rol de usuario cambiado correctamente."}
+                }
+                else{
+                    return {status:400, message:"No fue posible cambiar el rol de usuario."} 
+                }            
 
         } catch (error) {
             return Promise.reject(error)

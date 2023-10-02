@@ -28,7 +28,7 @@ export default class ReserveController{
     }
     static async statusReserve(req,res,next){
         try {
-            const reserve = await Model.statusReserve(req.params.reserveId, req.params.status)            
+            const reserve = await Model.statusReserve(parseInt(req.params.reserveId), req.params.status)            
             res.status(200).json(reserve);
         } catch (error) {
             next(error); 

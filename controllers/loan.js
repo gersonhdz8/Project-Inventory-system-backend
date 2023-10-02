@@ -11,9 +11,9 @@ export default class LoanController{
         }
     }
 
-    static async getAllLoan(req,res,next){
+    static async getAllLoans(req,res,next){
         try {
-            const loan = await Model.getAllLoan()            
+            const loan = await Model.getAllLoans()            
             res.status(200).json(loan);
         } catch (error) {
             next(error); 
@@ -49,7 +49,7 @@ export default class LoanController{
     static async statusLoan(req,res,next){
 
         try {
-            const loan = await Model.statusLoan(req.params.loanId, req.params.status)            
+            const loan = await Model.statusLoan(parseInt(req.params.loanId), req.params.status)            
             res.status(200).json(loan);
         } catch (error) {
             next(error); 
