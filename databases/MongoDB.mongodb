@@ -63,7 +63,7 @@ db.createCollection("products", {
             required: [
                 "_id",
                 "id",
-                "serial",                                
+                "serial",                            
                 "status"               
             ],
             properties: {
