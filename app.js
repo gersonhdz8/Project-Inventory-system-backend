@@ -7,13 +7,14 @@ import SuperadminRouter from "./routes/superadmin.js"
 import handleError from "./helpers/handleError.js";
 import passport from './config/passport.js';
 import checkRole from './middlewares/checkRole.js';
+import cors from "cors"
 
 
 dotenv.config()
 
 const app = express();
 app.use(express.json());
-
+app.use(cors());
 app.use("/auth", AuthRouter)
 app.use(passport.initialize())
 app.use(passport.authenticate('bearer', { session: false }))
