@@ -153,7 +153,7 @@ Estos son algunos ejemplos de los Endpoints, para obtener información de todos 
 
 ### Modelo Base de Datos
 
-![Modelo Base de Datos](![image](https://github.com/gersonhdz8/Project-Inventory-system-backend/assets/79285684/7c159f3d-31b7-4605-8a16-689a42abadd3)
+![Modelo Base de Datos](![image](./assets/database.png)
 )
 
 
