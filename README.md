@@ -153,7 +153,7 @@ Estos son algunos ejemplos de los Endpoints, para obtener información de todos 
 
 ### Modelo Base de Datos
 
-![Modelo Base de Datos](assets\Captura de pantalla 2023-10-05 132207.png)
+![Modelo Base de Datos](assets/Captura de pantalla 2023-10-05 132207.png)
 
 
 
